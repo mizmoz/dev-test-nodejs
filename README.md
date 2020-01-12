@@ -1,31 +1,29 @@
 # Nodejs Developer Test
 
-## The Task
+Given that you're looking for somebody to architect an application, i've taken the liberty of changing the approach a bit.
 
-Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
-complete all items, just make sure to show your understanding of the core technologies we use.
+I believe in reusing other well known software rather than writing everything from the start.
 
-1. Fork this repo
-2. Create an endpoint that allows the listing of the countries in `src/api/country.ts`
-3. Create an endpoint to fetch all of the countries sorted by their population
-4. Allow the populations to be updated
-5. Allow countries to be updated
-6. Allow countries to be deleted 
-7. Add authentication using the `src/api/authenticate.ts` method
-8. When you're done commit your code and create a pull request
+So, i've started with the CRUD part of the task
 
-Bonus points for
+json server - https://github.com/typicode/json-server - fits the bill well on the CRUD operations.
 
-1. Storing the data in Redis
-2. Allowing the app to be run from a docker-compose file
+what it lacks is the redis key save part, which i've implemented in redis-server.js. I am sure this could be achieved even better by running json-server in the CLI, rather than from node, but i could not find a good middleware integration in this short time frame.
 
-A basic project outline has been created to help you get started quickly but feel free to start from scratch if you have a preferred setup.
+However, json-server does too many things so i believe it should be fronted by an API Gateway - https://aws.amazon.com/api-gateway/ - which i have at https://qkiqq38wre.execute-api.eu-west-1.amazonaws.com/production/
 
-Feel free to use the internet including Google and Stackoverflow to help with the task
+The beauty of this approach is that the auth + usage quotas + encryption + exposure of features can be done on a case by case
 
-## Any questions?
+There's not enough time to make a cloudformation template to reflect the api gw config, but i'll try to outline the direction i was going for
 
-Please just ask.
+So, just for demo purposes a curl -X GET https://qkiqq38wre.execute-api.eu-west-1.amazonaws.com/production/countries will output all countries, while curl -X GET https://qkiqq38wre.execute-api.eu-west-1.amazonaws.com/production/ will require credentials, as per the config i've added in api gateway.
 
-Good luck and thanks for taking the time to complete this task!
+for updates, curl -H "Content-Type: application/json" -X PATCH https://qkiqq38wre.execute-api.eu-west-1.amazonaws.com/production/countries/afg -d '{"population":1000}' should do the job
+
+Behind the scenes there's an EC2 instance i've set up to run with the code in this repo, by using docker compose. API GW is running as a proxy, but elegantly adds HTTPS to my basic app
+
+This approach also fits very well the last part - docker - by enabling the service to run with multiple workers, if the data file is on a shared volume.
+
+I would replace though the docker redis with AWS' fully managed service. Also, i'd replace the IAM authentication i have for GET /, with Cognito, to enable an elegant SSO experience
+
+This way, i believe the architecture would have very little original code - hence little to document and debug to that respect, fast response time, scalable design, without sacrificing on security
