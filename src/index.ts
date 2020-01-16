@@ -4,11 +4,6 @@ const express = require('express')
 var bodyParser = require('body-parser');
 const app = express()
 const port = 3000
-
-app.get('/tsNotJsonCountries', (request,response) => {
-  response.setHeader('Content-Type', 'application/json');
-  response.send(cc.tsNotJson());
-});
 app.get('/countries', (request,response) => {
     response.setHeader('Content-Type', 'application/json');
     response.send(cc.countryList());

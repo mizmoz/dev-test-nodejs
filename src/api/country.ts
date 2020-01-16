@@ -1,6 +1,5 @@
 'use strict';
-import countries from "../configs/country";
-import { Country } from "../types";
+
 import { callbackify } from "util";
 
 const fs = require('fs');
@@ -11,15 +10,6 @@ let jsonData = require('../configs/countries.json');
 
 module.exports = {
 
-  tsNotJson: function () {
-    var arraysv = Array();
-    var props = Object.keys(countries);
-    var result = props.map(function(prop){
-      arraysv.push(countries[prop].name);
-    });
-    return(arraysv);
-  },  
-  
   countryList: function () {
     var jstring = JSON.stringify(jsonData);
     var obvalue = JSON.parse(jstring);
