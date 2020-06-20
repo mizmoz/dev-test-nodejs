@@ -1,3 +1,5 @@
+import redis from '../configs/redis';
+
 /**
  * Check the login details
  *
@@ -6,5 +8,9 @@
  */
 export default (username: string, password: string): Promise<boolean> =>
   new Promise<boolean>(resolve =>
-    resolve(username === "username" && password === "password"),
+    redis.get(username, (err, reply) => {
+      if (err) return resolve(false);
+
+      return resolve(password == reply);
+    })
   );
