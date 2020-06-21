@@ -13,6 +13,12 @@ export class AppController {
     return this.appService.getCountries(order);
   }
 
+  @Get('reset')
+  @HttpCode(204)
+  async resetCountryList() {
+    return this.appService.resetCountries();
+  }
+
   @Delete(':code')
   @HttpCode(204)
   async deleteCountry(@Param('code') code: string): Promise<void> {

@@ -25,6 +25,13 @@ export class AppService {
     return countries.sort((a, b) => this.sortCountries(a, b, order));
   }
 
+  async resetCountries() {
+    await this.cacheClient.del(CACHE_KEY);
+    await this.countryList();
+
+    return;
+  }
+
   /**
    * Update country details and population
    * @param code Country CODE
