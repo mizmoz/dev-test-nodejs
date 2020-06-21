@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import * as Redis from 'ioredis';
 import { RedisService } from 'nestjs-redis';
 import countries from './data/country';
-import { Country, SortOrder } from './types';
+import { Country, CountryDTO, SortOrder } from './types';
 
 const CACHE_KEY = 'countries';
 
@@ -21,17 +21,47 @@ export class AppService {
   }
 
   async getCountries(order: SortOrder) {
-    const listSize = await this.cacheClient.llen(CACHE_KEY);
-    if (listSize === 0) {
-      await this.loadCountries();
+    const countries: Country[] = await this.countryList();
+    return countries.sort((a, b) => this.sortCountries(a, b, order));
+  }
+
+  /**
+   * Update country details and population
+   * @param code Country CODE
+   * @param data Payload
+   */
+  async updateCountry(code: string, data: CountryDTO): Promise<Country> {
+    const countries = await this.countryList();
+    const editIndex = countries.findIndex(country => country.code === code);
+    if (editIndex === -1) {
+      throw new NotFoundException(`Country with code ${code} not found`);
     }
-    const range = await this.cacheClient.lrange(CACHE_KEY, 0, listSize);
-    const countries: Country[] = range.map(str => JSON.parse(str));
 
-    countries.sort((a, b) => this.sortCountries(a, b, order));
+    const oldData = countries[editIndex];
+    const newData = Object.assign(oldData, data);
 
-    // Sort alphabetically
-    return countries.sort((a, b) => a.name.localeCompare(b.name));
+    this.cacheClient.lset(CACHE_KEY, editIndex, JSON.stringify(newData));
+    return newData;
+  }
+
+  /**
+   * Delete country by code
+   * @param code country code
+   */
+  async deleteCountry(code: string): Promise<void> {
+    const countries = await this.countryList();
+    const deleteIndex = countries.findIndex(country => country.code === code);
+    if (deleteIndex === -1) {
+      throw new NotFoundException(`Country with code ${code} not found`);
+    }
+
+    await this.cacheClient.lrem(CACHE_KEY, 1, JSON.stringify(countries[deleteIndex]));
+    return;
+  }
+
+  private async loadCountries() {
+    const defaultCountries: Country[] = countries;
+    return await this.cacheClient.lpush(CACHE_KEY, defaultCountries.map(c => JSON.stringify({...c, population: 0})));
   }
 
   private sortCountries(a: Country, b: Country, order: SortOrder) {
@@ -39,11 +69,15 @@ export class AppService {
       return a.name.localeCompare(b.name);
     }
 
-    return order === SortOrder.ASC ? a.population - b.population : b.population - a.population;
+    return order === SortOrder.DESC ? a.population - b.population : b.population - a.population;
   }
 
-  async loadCountries() {
-    const defaultCountries: Country[] = countries;
-    return await this.cacheClient.lpush(CACHE_KEY, defaultCountries.map(c => JSON.stringify({...c, population: 0})));
+  private async countryList(): Promise<Country[]> {
+    const listSize = await this.cacheClient.llen(CACHE_KEY);
+    if (listSize === 0) {
+      await this.loadCountries();
+    }
+    const range = await this.cacheClient.lrange(CACHE_KEY, 0, listSize);
+    return range.map(str => JSON.parse(str));
   }
 }

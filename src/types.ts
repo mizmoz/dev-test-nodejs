@@ -1,4 +1,4 @@
-import { IsDefined, IsString, IsNotEmpty, Length } from 'class-validator';
+import { IsDefined, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export interface Country {
   name: string;
@@ -12,13 +12,13 @@ export enum SortOrder {
 }
 
 export class CountryDTO {
-  @IsString()
+  @IsOptional()
   @IsDefined()
   @IsNotEmpty()
+  @IsString()
   name: string;
 
-  @IsDefined()
-  @IsString()
-  @Length(3)
-  code: string;
+  @IsOptional()
+  @IsNumber()
+  population: number;
 }
