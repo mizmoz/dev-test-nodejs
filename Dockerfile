@@ -1,20 +1,19 @@
-FROM node:12-alpine AS BUILD_IMAGE
+FROM node:alpine AS BUILD_IMAGE
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock *.json ./
 
 RUN yarn --frozen-lockfile
 
-COPY ./src /usr/src/app/src
+COPY ./src /app/src
 
 RUN yarn build
 
-FROM node:12-alpine
-
+FROM node:alpine
 
 COPY ./config /config
-COPY --from=BUILD_IMAGE /usr/src/app/dist ./dist
-COPY --from=BUILD_IMAGE /usr/src/app/node_modules ./node_modules
+COPY --from=BUILD_IMAGE /app/dist ./dist
+COPY --from=BUILD_IMAGE /app/node_modules ./node_modules
 
 CMD ["node", "./dist/main"]
