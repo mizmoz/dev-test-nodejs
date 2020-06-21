@@ -6,7 +6,12 @@ import Country, { ICountry } from './../../models/country.model'
 
 import Cache from './../../utils/cache'
 
-const index = async (_req: Request, res: Response, _next: NextFunction) => {
+interface IParams {
+  code?: string
+  name?: string
+}
+
+const index = async (req: Request, res: Response, _next: NextFunction) => {
   try {
     const cached = await Cache.get('countries')
 
@@ -15,7 +20,17 @@ const index = async (_req: Request, res: Response, _next: NextFunction) => {
       return
     }
 
-    const results = await Country.find({}).sort('code')
+    const params: IParams = {}
+
+    if (req.query.code && req.query.code !== '') {
+      params.code = req.query.code as string
+    }
+
+    if (req.query.name && req.query.name !== '') {
+      params.name = req.query.code as string
+    }
+
+    const results = await Country.find(params).sort('code')
 
     await Cache.set('countries', results)
 
