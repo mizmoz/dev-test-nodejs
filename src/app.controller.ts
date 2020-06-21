@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Put, Query } from '@nestjs/common';
-import { ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiQuery, ApiTags, ApiNoContentResponse, ApiNotFoundResponse, ApiAcceptedResponse } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Put, Query, UseGuards } from '@nestjs/common';
+import { ApiAcceptedResponse, ApiInternalServerErrorResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
+import { AuthGuard } from './auth.guard';
 import { Country, CountryDTO, SortOrder } from './types';
 
 @Controller('countries')
 @ApiTags('countries')
+@UseGuards(AuthGuard)
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
