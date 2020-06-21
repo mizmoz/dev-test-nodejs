@@ -4,9 +4,21 @@ import HttpStatus from 'http-status-codes'
 
 import Country, { ICountry } from './../../models/country.model'
 
+import Cache from './../../utils/cache'
+
 const index = async (_req: Request, res: Response, _next: NextFunction) => {
   try {
+    const cached = await Cache.get('countries')
+
+    if (cached) {
+      res.json(cached)
+      return
+    }
+
     const results = await Country.find({})
+
+    await Cache.set('countries', results)
+
     res.json(results)
   } catch (err) {
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message })
