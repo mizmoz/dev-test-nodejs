@@ -27,7 +27,7 @@ const index = async (req: Request, res: Response, _next: NextFunction) => {
     }
 
     if (req.query.name && req.query.name !== '') {
-      params.name = req.query.code as string
+      params.name = req.query.name as string
     }
 
     const results = await Country.find(params).sort('code')
