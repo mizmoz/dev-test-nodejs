@@ -1,5 +1,6 @@
-import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
-import { NestFactory, Reflector } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as bodyParser from 'body-parser';
 import { get } from 'config';
 import * as cors from 'cors';
@@ -7,9 +8,6 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   // JSON Body Validation
   app.useGlobalPipes(
@@ -23,6 +21,15 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  const options = new DocumentBuilder()
+    .setTitle('Dev Test Docs')
+    .setDescription('Countries API description')
+    .setVersion('1.0')
+    .addTag('countries')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('docs', app, document);
 
   app.use(cors());
   app.use(bodyParser.json());

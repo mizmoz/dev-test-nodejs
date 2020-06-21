@@ -1,8 +1,15 @@
 import { IsDefined, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ApiProperty, ApiResponse, ApiOkResponse } from '@nestjs/swagger';
 
-export interface Country {
+@ApiResponse({ type: ApiOkResponse })
+export class Country {
+  @ApiProperty()
   name: string;
+
+  @ApiProperty()
   code: string;
+
+  @ApiProperty()
   population?: number;
 }
 
@@ -16,9 +23,11 @@ export class CountryDTO {
   @IsDefined()
   @IsNotEmpty()
   @IsString()
+  @ApiProperty({ required: false })
   name: string;
 
   @IsOptional()
   @IsNumber()
+  @ApiProperty({ required: false })
   population: number;
 }
