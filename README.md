@@ -1,31 +1,36 @@
-# Nodejs Developer Test
+# Nodejs Developer Test Submission
 
-## The Task
+## Installation
 
-Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
-complete all items, just make sure to show your understanding of the core technologies we use.
+```bash
+$ yarn
+```
 
-1. Fork this repo
-2. Create an endpoint that allows the listing of the countries in `src/api/country.ts`
-3. Create an endpoint to fetch all of the countries sorted by their population
-4. Allow the populations to be updated
-5. Allow countries to be updated
-6. Allow countries to be deleted 
-7. Add authentication using the `src/api/authenticate.ts` method
-8. When you're done commit your code and create a pull request
+## Running the app
 
-Bonus points for
+Before starting, ensure that a redis instace is setup and the connection details are provided in `config/default.js`
 
-1. Storing the data in Redis
-2. Allowing the app to be run from a docker-compose file
+```bash
+# development
+$ yarn start
 
-A basic project outline has been created to help you get started quickly but feel free to start from scratch if you have a preferred setup.
+# watch mode
+$ yarn start:dev
 
-Feel free to use the internet including Google and Stackoverflow to help with the task
+# production mode
+$ yarn start:prod
+```
 
-## Any questions?
+## Docker Compose
 
-Please just ask.
+Rename `.env.example` to `.env` and provide appropriate values. Afterwards, run the following command:
 
-Good luck and thanks for taking the time to complete this task!
+```bash
+docker-compose up
+```
+
+A redis backend as well as the web app would be made available once docker finishes instatiating the containers.
+
+## Documentation URL
+
+[Access Swagger documentation here](http://localhost:8080/docs)
