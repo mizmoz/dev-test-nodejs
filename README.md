@@ -1,31 +1,75 @@
-# Nodejs Developer Test
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+</p>
 
-## The Task
+[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
+[travis-url]: https://travis-ci.org/nestjs/nest
+[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
+[linux-url]: https://travis-ci.org/nestjs/nest
+  
+  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
+<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
+<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
+<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
+<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
+  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
-complete all items, just make sure to show your understanding of the core technologies we use.
+## Description
 
-1. Fork this repo
-2. Create an endpoint that allows the listing of the countries in `src/api/country.ts`
-3. Create an endpoint to fetch all of the countries sorted by their population
-4. Allow the populations to be updated
-5. Allow countries to be updated
-6. Allow countries to be deleted 
-7. Add authentication using the `src/api/authenticate.ts` method
-8. When you're done commit your code and create a pull request
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-Bonus points for
+## Installation
 
-1. Storing the data in Redis
-2. Allowing the app to be run from a docker-compose file
+```bash
+$ npm install
+```
 
-A basic project outline has been created to help you get started quickly but feel free to start from scratch if you have a preferred setup.
+## Running the app
 
-Feel free to use the internet including Google and Stackoverflow to help with the task
+```bash
+# development
+$ npm run start
 
-## Any questions?
+# watch mode
+$ npm run start:dev
 
-Please just ask.
+# production mode
+$ npm run start:prod
+```
 
-Good luck and thanks for taking the time to complete this task!
+## Test
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+  Nest is [MIT licensed](LICENSE).
