@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Put, Query, UseGuards } from '@nestjs/common';
 import {
   ApiAcceptedResponse, ApiInternalServerErrorResponse, ApiNoContentResponse,
-  ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiQuery, ApiTags
+  ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiQuery, ApiTags, ApiBasicAuth
 } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { AuthGuard } from './auth.guard';
@@ -9,6 +9,7 @@ import { Country, CountryDTO, SortOrder } from './types';
 
 @Controller('countries')
 @ApiTags('countries')
+@ApiBasicAuth()
 @UseGuards(AuthGuard)
 export class AppController {
   constructor(private readonly appService: AppService) { }

@@ -27,7 +27,9 @@ async function bootstrap() {
     .setDescription('Countries API description')
     .setVersion('1.0')
     .addTag('countries')
+    .addBasicAuth()
     .build();
+  
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
 

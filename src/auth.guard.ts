@@ -8,7 +8,8 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req: Request = context.switchToHttp().getRequest();
-    const auth: string = req.headers.get('authorization') ?? '';
+    const headers: any = req.headers;
+    const auth: string = headers['authorization'] ?? '';
     if (!auth|| auth.indexOf('Basic ') === -1) {
       return false;
     }
