@@ -6,6 +6,7 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 
 import api from './api'
+import errorHandler from './middlewares/error.middleware'
 
 const API_NAME = 'Country Service'
 const API_VERSION = 'v1'
@@ -32,11 +33,13 @@ app.use(morgan('tiny'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.get('health', (_req: express.Request, res: express.Response) => {
+app.get('/health', (_req: express.Request, res: express.Response) => {
   res.json(`Welcome to ${API_NAME} using version ${API_VERSION}`)
 })
 
-app.use('api/v1', api)
+app.use('/api/v1', api)
+
+app.use(errorHandler)
 
 app.listen(API_PORT, () => {
   console.log(`${API_NAME} listening on 0.0.0.0:${API_PORT}`)

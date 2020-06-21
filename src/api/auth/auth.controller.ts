@@ -2,15 +2,47 @@ import { Response, Request, NextFunction } from 'express'
 
 import HttpStatus from 'http-status-codes'
 
-const login = (_req: Request, res: Response, _next: NextFunction) => {
+import jwt from 'jsonwebtoken'
+
+import User, { IUser } from './../../models/user.model'
+
+const APP_SECRET = process.env.APP_SECRET || 'eDlXOuzbKUTJ6fJXjjLcPagU6Lg8uAcp'
+
+const login = async (req: Request, res: Response, _next: NextFunction) => {
   try {
+    const user: IUser = (await User.findOne({ email: req.body.email })) as IUser
+
+    if (!user) {
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ message: 'Invalid login credentials' })
+      return
+    }
+
+    const isMatch: boolean = user.comparePassword(req.body.password)
+
+    if (!isMatch) {
+      res.status(HttpStatus.BAD_REQUEST).json({ message: 'Invalid password' })
+      return
+    }
+
+    return res.json({ token: jwt.sign({ _id: user._id }, APP_SECRET) })
   } catch (err) {
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message })
   }
 }
 
-const show = (_req: Request, res: Response, _next: NextFunction) => {
+export interface IUserRequest extends Request {
+  user?: any
+}
+
+const show = async (req: IUserRequest, res: Response, _next: NextFunction) => {
   try {
+    const user: IUser = (await User.findOne({
+      email: req.user._id,
+    })) as IUser
+
+    res.json(user)
   } catch (err) {
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message })
   }
