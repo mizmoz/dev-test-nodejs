@@ -15,7 +15,7 @@ const index = async (_req: Request, res: Response, _next: NextFunction) => {
       return
     }
 
-    const results = await Country.find({})
+    const results = await Country.find({}).sort('code')
 
     await Cache.set('countries', results)
 
