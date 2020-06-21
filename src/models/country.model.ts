@@ -10,4 +10,4 @@ const CountrySchema: Schema = new Schema({
   code: { type: String, required: true, unique: true },
 })
 
-export default mongoose.model('Country', CountrySchema)
+export default mongoose.model<ICountry>('Country', CountrySchema)
