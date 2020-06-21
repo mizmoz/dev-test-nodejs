@@ -4,10 +4,10 @@ import { ApiProperty, ApiResponse, ApiOkResponse } from '@nestjs/swagger';
 @ApiResponse({ type: ApiOkResponse })
 export class Country {
   @ApiProperty()
-  name: string;
+  name: string | undefined;
 
   @ApiProperty()
-  code: string;
+  code: string | undefined;
 
   @ApiProperty()
   population?: number;
@@ -24,10 +24,10 @@ export class CountryDTO {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({ required: false })
-  name: string;
+  public name: string | undefined;
 
   @IsOptional()
   @IsNumber()
   @ApiProperty({ required: false })
-  population: number;
+  public population: number | undefined;
 }

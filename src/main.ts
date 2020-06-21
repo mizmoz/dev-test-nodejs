@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as bodyParser from 'body-parser';
 import { get } from 'config';
-import * as cors from 'cors';
+import cors from 'cors';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -35,6 +35,6 @@ async function bootstrap() {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  await app.listen(+get('PORT'));
+  await app.listen(+get<any>('PORT'));
 }
 bootstrap();

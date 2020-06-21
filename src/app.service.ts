@@ -10,7 +10,9 @@ const CACHE_KEY = 'countries';
 export class AppService {
   private _client: Redis.Redis;
 
-  constructor(private readonly redisService: RedisService) { }
+  constructor(private readonly redisService: RedisService) {
+    this._client = this.redisService.getClient();
+  }
 
   get cacheClient() {
     if (!this._client) {
@@ -68,15 +70,19 @@ export class AppService {
 
   private async loadCountries() {
     const defaultCountries: Country[] = countries;
-    return await this.cacheClient.lpush(CACHE_KEY, defaultCountries.map(c => JSON.stringify({...c, population: 0})));
+    return await this.cacheClient.lpush(CACHE_KEY, defaultCountries.map(c => JSON.stringify({ ...c, population: 0 })));
   }
 
   private sortCountries(a: Country, b: Country, order: SortOrder) {
-    if (a.population === b.population) {
-      return a.name.localeCompare(b.name);
+    if (!!a.name && !!b.name && a.population !== undefined && b.population !== undefined) {
+      if (a.population === b.population) {
+        return a.name.localeCompare(b.name);
+      }
+
+      return order === SortOrder.DESC ? a.population - b.population : b.population - a.population;
     }
 
-    return order === SortOrder.DESC ? a.population - b.population : b.population - a.population;
+    return 0;
   }
 
   private async countryList(): Promise<Country[]> {
