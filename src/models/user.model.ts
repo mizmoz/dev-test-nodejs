@@ -16,6 +16,10 @@ const UserSchema: Schema = new Schema({
   password: { type: String, required: true },
 })
 
+/**
+ * @param  {} 'save'
+ * @param  {} function(next
+ */
 UserSchema.pre<IUser>('save', function(next) {
   const user: IUser = this
   // only hash the password if it has been modified (or is new)
@@ -34,6 +38,9 @@ UserSchema.pre<IUser>('save', function(next) {
   })
 })
 
+/**
+ * @param  {string} candidatePassword
+ */
 UserSchema.methods.comparePassword = function(candidatePassword: string) {
   const userPassword = this.password
   return new Promise((resolve, reject) => {

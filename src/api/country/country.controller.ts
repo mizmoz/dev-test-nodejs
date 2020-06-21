@@ -11,6 +11,11 @@ interface IParams {
   name?: string
 }
 
+/**
+ * @param  {Request} req
+ * @param  {Response} res
+ * @param  {NextFunction} _next
+ */
 const index = async (req: Request, res: Response, _next: NextFunction) => {
   try {
     const cached = await Cache.get('countries')
@@ -40,6 +45,11 @@ const index = async (req: Request, res: Response, _next: NextFunction) => {
   }
 }
 
+/**
+ * @param  {Request} req
+ * @param  {Response} res
+ * @param  {NextFunction} _next
+ */
 const create = async (req: Request, res: Response, _next: NextFunction) => {
   try {
     const country: ICountry = new Country()
@@ -55,6 +65,11 @@ const create = async (req: Request, res: Response, _next: NextFunction) => {
   }
 }
 
+/**
+ * @param  {Request} req
+ * @param  {Response} res
+ * @param  {NextFunction} _next
+ */
 const show = async (req: Request, res: Response, _next: NextFunction) => {
   try {
     const country: ICountry | null = (await Country.findOne({
@@ -74,6 +89,11 @@ const show = async (req: Request, res: Response, _next: NextFunction) => {
   }
 }
 
+/**
+ * @param  {Request} req
+ * @param  {Response} res
+ * @param  {NextFunction} _next
+ */
 const update = async (req: Request, res: Response, _next: NextFunction) => {
   try {
     const country: ICountry | null = (await Country.findOne({
@@ -98,6 +118,11 @@ const update = async (req: Request, res: Response, _next: NextFunction) => {
   }
 }
 
+/**
+ * @param  {Request} req
+ * @param  {Response} res
+ * @param  {NextFunction} _next
+ */
 const destroy = async (req: Request, res: Response, _next: NextFunction) => {
   try {
     const country: ICountry | null = (await Country.findOne({

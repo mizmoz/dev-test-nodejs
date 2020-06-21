@@ -8,6 +8,11 @@ import User, { IUser } from './../../models/user.model'
 
 const APP_SECRET = process.env.APP_SECRET || 'eDlXOuzbKUTJ6fJXjjLcPagU6Lg8uAcp'
 
+/**
+ * @param  {Request} req
+ * @param  {Response} res
+ * @param  {NextFunction} _next
+ */
 const login = async (req: Request, res: Response, _next: NextFunction) => {
   try {
     const user: IUser = (await User.findOne({ email: req.body.email })) as IUser
@@ -36,6 +41,11 @@ export interface IUserRequest extends Request {
   user?: any
 }
 
+/**
+ * @param  {IUserRequest} req
+ * @param  {Response} res
+ * @param  {NextFunction} _next
+ */
 const show = async (req: IUserRequest, res: Response, _next: NextFunction) => {
   try {
     const user: IUser = (await User.findOne({
