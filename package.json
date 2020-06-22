@@ -14,10 +14,25 @@
     "test": "jest"
   },
   "dependencies": {
+    "@hapi/hapi": "^19.1.1",
+    "@hapi/inert": "^6.0.1",
+    "@hapi/joi": "^17.1.1",
+    "@hapi/vision": "^6.0.0",
+    "dotenv-safe": "^8.2.0",
+    "hapi-swagger": "^13.0.2",
+    "ioredis": "^4.17.3",
+    "sqlite3": "^4.2.0",
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
     "@types/node": "^12.0.2",
+    "@types/hapi__hapi": "^19.0.3",
+    "@types/hapi__inert": "^5.2.0",
+    "@types/hapi__vision": "^5.5.1",
+    "@types/ioredis": "^4.16.6",
+    "@types/sqlite3": "^3.1.6",
+    "@types/uuid": "^8.0.0",
     "jest": "^24.8.0",
     "nodemon": "^1.19.0",
     "prettier": "^1.17.1",
