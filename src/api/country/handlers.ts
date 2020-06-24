@@ -1,22 +1,47 @@
 import { Request, Response } from "express";
+import HttpStatus from "http-status-codes";
 
-import countries from "../../configs/country";
 import { ICountry } from "../../types";
+import Country from "./../../models/country.model";
+import { count } from "console";
 
-export function index(req: Request, res: Response) {
-  const { sort_order: sortOrder, sort_by = "population" } = req.query;
-  let data = countries as any; // @HACK: This is only while we're not using db
-
-  if (typeof sortOrder !== "undefined") {
+export async function index(req: Request, res: Response) {
+  try {
+    const { sort_order: sortOrder, sort_by = "code" } = req.query;
     const sortBy: keyof ICountry = String(
       sort_by,
     ).toLowerCase() as keyof ICountry;
 
-    data = data.sort((left: ICountry, right: ICountry) => {
-      const modifier = sortOrder === "asc" ? -1 : 1;
-      return left[sortBy] > right[sortBy] ? -1 * modifier : 1 * modifier;
+    const data = await Country.find({}).sort({
+      [sortBy]: sortOrder || "asc",
+    });
+
+    res.json(data);
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
     });
   }
+}
 
-  res.json(data);
+export async function update(req: Request, res: Response) {
+  try {
+    // @TODO: Could be _id, but I went with code, for easier testing in postman
+    const { code, population } = req.body;
+    const country = await Country.findOne({ code });
+
+    if (!country) {
+      res.status(HttpStatus.NOT_FOUND).json({ message: "Not found" });
+    } else {
+      country.population = population;
+
+      country.save();
+    }
+
+    res.json(country);
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+    });
+  }
 }
