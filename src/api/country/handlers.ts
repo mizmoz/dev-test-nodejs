@@ -3,7 +3,6 @@ import HttpStatus from "http-status-codes";
 
 import { ICountry } from "../../types";
 import Country from "./../../models/country.model";
-import { count } from "console";
 
 export async function index(req: Request, res: Response) {
   try {
@@ -27,19 +26,17 @@ export async function index(req: Request, res: Response) {
 export async function update(req: Request, res: Response) {
   try {
     // @TODO: Could be _id, but I went with code, for easier testing in postman
-    const { code, population } = req.body;
-    const country = await Country.findOne({ code });
+    const { _id, ...rest } = req.body;
+    const country = await Country.findOneAndUpdate({ _id }, rest);
 
     if (!country) {
       res.status(HttpStatus.NOT_FOUND).json({ message: "Not found" });
-    } else {
-      country.population = population;
-
-      country.save();
     }
 
     res.json(country);
   } catch (error) {
+    // @TODO: Change to custom message to prevent displaying actual mongoose error message
+    // only save mongoose message to internal log file.
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       message: error.message,
     });
