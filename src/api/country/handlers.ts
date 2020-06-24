@@ -2,10 +2,18 @@ import { Request, Response } from "express";
 import HttpStatus from "http-status-codes";
 
 import { ICountry } from "../../types";
-import Country from "./../../models/country.model";
+import Country from "../../models/country.model";
+import * as cache from "../../helpers/cache";
 
 export async function index(req: Request, res: Response) {
   try {
+    const cached = await cache.get("countries");
+
+    if (cached) {
+      res.json(cached);
+      return;
+    }
+
     const { sort_order: sortOrder, sort_by = "code" } = req.query;
     const sortBy: keyof ICountry = String(
       sort_by,
@@ -14,6 +22,8 @@ export async function index(req: Request, res: Response) {
     const data = await Country.find({}).sort({
       [sortBy]: sortOrder || "asc",
     });
+
+    cache.set("countries", data);
 
     res.json(data);
   } catch (error) {
@@ -33,6 +43,8 @@ export async function update(req: Request, res: Response) {
       res.status(HttpStatus.NOT_FOUND).json({ message: "Not found" });
       return;
     }
+
+    cache.del("countries");
 
     res.json(country);
   } catch (error) {
@@ -54,6 +66,8 @@ export async function remove(req: Request, res: Response) {
       res.status(HttpStatus.NOT_FOUND).json({ message: "Not found" });
       return;
     }
+
+    cache.del("countries");
 
     res.json({ message: `${country.code} has been removed` });
   } catch (error) {
