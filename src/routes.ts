@@ -1,6 +1,6 @@
 import { Router } from "express";
-import country from "./api/country";
 import auth from "./api/auth";
+import country from "./api/country";
 import setup from "./api/setup";
 
 const router: Router = Router();
