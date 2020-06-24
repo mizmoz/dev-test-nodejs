@@ -26,14 +26,36 @@ export async function index(req: Request, res: Response) {
 export async function update(req: Request, res: Response) {
   try {
     // @TODO: Could be _id, but I went with code, for easier testing in postman
-    const { _id, ...rest } = req.body;
-    const country = await Country.findOneAndUpdate({ _id }, rest);
+    const _id: string = req.params.id;
+    const country = await Country.findOneAndUpdate({ _id }, req.body);
 
     if (!country) {
       res.status(HttpStatus.NOT_FOUND).json({ message: "Not found" });
+      return;
     }
 
     res.json(country);
+  } catch (error) {
+    // @TODO: Change to custom message to prevent displaying actual mongoose error message
+    // only save mongoose message to internal log file.
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+    });
+  }
+}
+
+export async function remove(req: Request, res: Response) {
+  try {
+    // @TODO: Could be _id, but I went with code, for easier testing in postman
+    const _id: string = req.params.id;
+    const country = await Country.findOneAndRemove({ _id });
+
+    if (!country) {
+      res.status(HttpStatus.NOT_FOUND).json({ message: "Not found" });
+      return;
+    }
+
+    res.json({ message: `${country.code} has been removed` });
   } catch (error) {
     // @TODO: Change to custom message to prevent displaying actual mongoose error message
     // only save mongoose message to internal log file.
