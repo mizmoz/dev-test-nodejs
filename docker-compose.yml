@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+  node:
+    build: .
+    container_name: "node-app"
+    env_file: .env
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/build
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    networks:
+      - appn
+  redis:
+    container_name: "redis"
+    image: redis:5.0
+    volumes:
+      - ./data/redis/:/data:cached
+    ports:
+      - "6379:6379"
+    networks:
+      - appn
+networks:
+  appn:
+    name: appn
+    driver: bridge
