@@ -1,31 +1,80 @@
 # Nodejs Developer Test
 
-## The Task
+## Starting the App
 
-Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
-complete all items, just make sure to show your understanding of the core technologies we use.
+To run this app:
 
-1. Fork this repo
-2. Create an endpoint that allows the listing of the countries using the method from `src/api/country.ts`
-3. Create an endpoint to fetch all of the countries sorted by their population
-4. Allow the populations to be updated
-5. Allow countries to be updated
-6. Allow countries to be deleted 
-7. Add authentication using the `src/api/authenticate.ts` method
-8. When you're done commit your code and create a pull request
+1. Rename `.env.example` to `.env`, and update the values accordingly.
+2. Run `docker-compose up --build`.
+3. If redis' data is not yet initialized, go inside the node app container and run `npm run seeder` or simply run `docker-compose run node npm run seeder`.
 
-Bonus points for
+## Stopping the App
 
-1. Storing the data in Redis
-2. Allowing the app to be run from a docker-compose file
+To stop this app:
 
-A basic project outline has been created to help you get started quickly but feel free to start from scratch if you have a preferred setup.
+Run this command: `docker-compose down`
 
-Feel free to use the internet including Google and Stackoverflow to help with the task
+## Endpoints
 
-## Any questions?
+In order to access the endpoints below, every request should contain a basic authentication with the username and password saved in redis.
+Username and password can be set on `.env` and be saved to redis when `npm run seeder` is run.
 
-Please just ask.
+### `GET` /countries
 
-Good luck and thanks for taking the time to complete this task!
+Get list of countries.
+
+Query Params:
+- sort_by - Country field to be compared for sorting. Possible values are `name`, `code` and `population`.
+- order_by - Result order. Possible values are `asc`, and `desc`. Default value is `asc` if this param is not provided.
+
+Response:
+
+```json
+{
+  "message": "Here are the countries.",
+  "data": [
+    {
+      "name": "AFGHANISTAN",
+      "code": "afg",
+      "population": 0
+    },
+    {
+      "name": "ALBANIA",
+      "code": "alb",
+      "population": 0
+    }
+  ]
+}
+```
+
+### `PUT` /countries/{country_name}
+
+Update a country's data. Provide the country fields to be updated in the request body.
+
+Body:
+
+```json
+{
+  "population": 100
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Country is updated."
+}
+```
+
+### `DELETE` /countries/{country_name}
+
+Delete a country.
+
+Response:
+
+```json
+{
+  "message": "Country is updated."
+}
+```

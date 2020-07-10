@@ -1,4 +1,4 @@
-// Do not use this file directly, 
+// Do not use this file directly,
 // please use the default export from src/api/country.ts
 export default [
   {
