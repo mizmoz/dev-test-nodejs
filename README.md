@@ -58,12 +58,12 @@ $ curl 'http://localhost:3000/countries/pop/desc' -H 'Authorization: Basic dXNlc
 
 ### 4. Update the population of USA
 ```sh
-$ curl 'http://localhost:3000/country/usa/pop' -X PUT -H 'Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=' -d '{"population":777}'
+$ curl 'http://localhost:3000/country/usa/pop' -X PUT -H 'Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=' -H 'Content-Type: application/json' -d '{"population":777}'
 ```
 
 ### 5. Update the details of PERU
 ```sh
-$ curl 'http://localhost:3000/country/per' -X PUT -H 'Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=' -d '{"name":"PERU","code":"per","population":500}'
+$ curl 'http://localhost:3000/country/per' -X PUT -H 'Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=' -H 'Content-Type: application/json' -d '{"name":"PERU","code":"per","population":500}'
 ```
 
 ### 6. Delete the country of Zimbabwe
