@@ -3,7 +3,7 @@
 ## The Task
 
 Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
+list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to
 complete all items, just make sure to show your understanding of the core technologies we use.
 
 1. Fork this repo
@@ -11,7 +11,7 @@ complete all items, just make sure to show your understanding of the core techno
 3. Create an endpoint to fetch all of the countries sorted by their population
 4. Allow the populations to be updated
 5. Allow countries to be updated
-6. Allow countries to be deleted 
+6. Allow countries to be deleted
 7. Add authentication using the `src/api/authenticate.ts` method
 8. When you're done commit your code and create a pull request
 
@@ -29,3 +29,13 @@ Feel free to use the internet including Google and Stackoverflow to help with th
 Please just ask.
 
 Good luck and thanks for taking the time to complete this task!
+
+## RUN SOLUTION
+
+1. Running though docker
+   1.1 Run `docker-compose up --build`
+   1.2. Visit `localhost:3000` on browser - (NOTE: This is ran on Docker Desktop Mac / Possible that IP is configured differently so use docker machine IP instead)
+2. Running locally
+   2.1. Build react app by running `yarn build` inside `./src/client`
+   2.2. Run server by running `yarn start`
+   2.3. Visit `localhost:3000` on browser

@@ -1,0 +1,31 @@
+version: "2"
+
+services:
+  redis:
+    image: "docker.io/bitnami/redis:6.0-debian-10"
+    container_name: 'redis_app'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis_data:/bitnami/redis/data"
+    expose:
+      - 6379
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - APP_PORT=3000
+      - NODE_ENV=development
+      - REDIS_URL=redis://redis_app
+    links:
+      - redis
+
+volumes:
+  redis_data:
+    driver: local
