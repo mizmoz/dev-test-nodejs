@@ -39,7 +39,9 @@ export class MainController {
     let keys = await redisClient.keysAsync('*');
     let countries = await redisClient.mgetAsync(keys);
     await countries.sort(function(a:any, b:any) {
-      return parseInt(a.population) - parseInt(b.population);
+      let ajson = JSON.parse(a);
+      let bjson = JSON.parse(b);
+      return parseInt(ajson.population) - parseInt(bjson.population);
     });
     res.status(200).send({
       countries: countries
@@ -50,7 +52,9 @@ export class MainController {
     let keys = await redisClient.keysAsync('*');
     let countries = await redisClient.mgetAsync(keys);
     await countries.sort(function(a:any, b:any) {
-      return parseInt(b.population) - parseInt(a.population);
+      let ajson = JSON.parse(a);
+      let bjson = JSON.parse(b);
+      return parseInt(bjson.population) - parseInt(ajson.population);
     });
     res.status(200).send({
       countries: countries
