@@ -32,14 +32,26 @@ Good luck and thanks for taking the time to complete this task!
 
 ## Solution
 
-Requirements: [Docker Community Edition](https://www.docker.com/community-edition)
+Requirements:
+- [Docker Community Edition](https://www.docker.com/community-edition)
+- node >= 10.16.0 or LTS
 
 To start the application, run:
 ```sh
 $ docker-compose up
+
+if there issues in starting up, use the following commands:
+
+$ redis-server
+
+$ yarn install && yarn build && yarn start
 ```
 
-**NOTE:** Every request must have the `Authorization` header so that the server can authenticate the user.
+**WARNING:**
+- On some environment, there are latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+
+**NOTE:**
+- Every request must have the `Authorization` header so that the server can authenticate the user.
 
 ### 1. List all countries
 ```sh
