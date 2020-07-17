@@ -12,6 +12,9 @@ class MainRoutes {
     this.router.get("/", (req: express.Request, res: express.Response) =>
       mainController.root(req, res)
     );
+    this.router.get("/countries", (req: express.Request, res: express.Response) =>
+      mainController.getCountries(req, res)
+    );
   }
 }
 
