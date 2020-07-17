@@ -40,7 +40,7 @@ To start the application, run:
 ```sh
 $ docker-compose up
 
-if there issues in starting up, use the following commands:
+if there are issues in starting up, use the following commands:
 
 $ redis-server
 
