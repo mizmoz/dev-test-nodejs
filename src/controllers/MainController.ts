@@ -7,7 +7,6 @@ export class MainController {
   public countries: any;
 
   constructor() {
-    console.log('constructor');
     this.init();
   }
 
@@ -17,7 +16,7 @@ export class MainController {
 
   public async init() {
     try {
-      console.log('init');
+      console.log('Load the countries.');
       let id = 1;
       let cs = await (await Countries()).map(e => {
         return ({id: id++, ...e, population: Math.floor(Math.random() * 1001)});
@@ -26,12 +25,6 @@ export class MainController {
     } catch(e) {
       console.log('init error: ', e);
     }
-  }
-
-  public root(req: Request, res: Response) {
-    res.status(200).send({
-      message: "GET request successful!!"
-    });
   }
 
   public getCountries(req: Request, res: Response) {
