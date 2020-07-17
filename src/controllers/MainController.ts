@@ -14,7 +14,9 @@ export class MainController {
   public async init() {
     try {
       console.log('init');
-      let cs = await Countries();
+      let cs = await (await Countries()).map(e => {
+        return ({...e, population: Math.floor(Math.random() * 1001)});
+      });
       this.countries = cs;
     } catch(e) {
       console.log('init error: ', e);
