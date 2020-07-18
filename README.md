@@ -40,15 +40,10 @@ To start the application, run:
 ```sh
 $ docker-compose up
 
-if there are issues in starting up, use the following commands:
-
-$ redis-server
-
-$ yarn install && yarn build && yarn start
+# Then run these commands on a separate terminal to synchronize both redis and node app:
+$ docker restart cache
+$ docker restart dev-test-nodejs_app_1
 ```
-
-**WARNING:**
-- On some environment, there are latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 
 **NOTE:**
 - Every request must have the `Authorization` header so that the server can authenticate the user.
