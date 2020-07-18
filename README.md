@@ -30,7 +30,8 @@ Please just ask.
 
 Good luck and thanks for taking the time to complete this task!
 
-## Solution
+[](#solution)
+# Solution
 
 Requirements:
 - [Docker Community Edition](https://www.docker.com/community-edition)
