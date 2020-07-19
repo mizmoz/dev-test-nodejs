@@ -29,3 +29,6 @@ Feel free to use the internet including Google and Stackoverflow to help with th
 Please just ask.
 
 Good luck and thanks for taking the time to complete this task!
+
+# Solution Doco
+Please see [here](https://github.com/jbalgue/dev-test-nodejs/tree/master/src/controller#solution-doco).

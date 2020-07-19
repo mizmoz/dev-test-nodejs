@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  dev-test-nodejs:
+    image: dev-test-nodejs
+    build: .
+    environment:
+      NODE_ENV: development
+    ports:
+      - 9090
+      - 9229:9229
+    ## set your startup file here
+    command: node --inspect=0.0.0.0:9229 index.js
