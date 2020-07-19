@@ -9,11 +9,17 @@
     "start-inspect": "nodemon --exec 'node --inspect -r ts-node/register src/index.ts'",
     "build": "tsc",
     "go": "ts-node src/index.ts",
-    "go:prod": "node ./build/src/index.js",
+    "go:prod": "node ./build/index.js",
     "test-watch": "jest --watchAll",
     "test": "jest"
   },
   "dependencies": {
+    "@types/restify": "^8.4.2",
+    "@types/restify-errors": "^4.3.3",
+    "redis": "^3.0.2",
+    "restify": "^8.5.1",
+    "restify-errors": "^8.0.2",
+    "tedis": "^0.1.12"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
