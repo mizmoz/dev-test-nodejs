@@ -9,7 +9,7 @@ export default class Country {
   private redis: any;
 
   constructor(redis: any) {
-    this.redis = redis; // ZZZ Create redis interface!!
+    this.redis = redis;
   }
 
   public getCountries() {
