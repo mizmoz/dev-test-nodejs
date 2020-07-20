@@ -1,5 +1,9 @@
 # Nodejs Developer Test
 
+## Output
+
+Please refer to [SETUP.md](SETUP.md) above. Thanks!
+
 ## The Task
 
 Create a simple node service that provides provides some endpoints to allow the listing and updating of a
