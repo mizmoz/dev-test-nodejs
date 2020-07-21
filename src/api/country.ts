@@ -7,8 +7,11 @@ import { Country } from "../types";
  */
 export default (): Promise<Array<Country>> =>
   new Promise((resolve, reject) => {
-    setTimeout(
-      () => (Math.round(Math.random()) === 0 ? resolve(countries) : reject()),
-      100,
-    );
+    // setTimeout(
+    //   () => (Math.round(Math.random()) === 0 ? resolve(countries) : reject()),
+    //   100,
+    // );
+    resolve(countries)
   });
+
+  
