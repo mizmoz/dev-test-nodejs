@@ -13,9 +13,8 @@
     "test-watch": "jest --watchAll",
     "test": "jest"
   },
-  "dependencies": {
-  },
   "devDependencies": {
+    "@types/express": "^4.17.7",
     "@types/jest": "^24.0.13",
     "@types/node": "^12.0.2",
     "jest": "^24.8.0",
@@ -29,5 +28,10 @@
     "tslint-config-security": "^1.16.0",
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "winston": "^3.3.3"
   }
 }
