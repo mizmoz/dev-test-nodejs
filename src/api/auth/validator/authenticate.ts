@@ -1,25 +1,74 @@
 import { NextFunction, Request, Response } from 'express'
 import { body as checkBody, validationResult } from 'express-validator/check'
 import HttpStatus from 'http-status-codes'
+import isEmpty from 'lodash/isEmpty'
 
 const validateLogin = (req: Request, res: Response, next: NextFunction) => {
-  checkBody('lastname', 'Please provide your lastname').notEmpty()
-  checkBody('firstname', 'Please provide your firstname').notEmpty()
-  checkBody('username', 'Please provide your username').notEmpty()
-  checkBody('password', 'Please provide your password').notEmpty()
+  const auth = req.headers.authorization
 
-  const errors = validationResult(req).mapped()
-  if (errors) {
-    return res.status(HttpStatus.BAD_REQUEST).send({
-      response: {
-        msg: '',
-        result: errors,
-        success: false,
-      },
-      statusCode: 400,
+  const uname = {
+    param: 'username',
+    message: 'Please provide your Username',
+  }
+
+  const pword = {
+    param: 'password',
+    message: 'Please provide your Password',
+  }
+
+  if (!auth) {
+    res.status(HttpStatus.BAD_REQUEST).send({
+      result: [uname, pword],
+      message: '',
+      success: false,
     })
-  } else {
-    return next()
+  } else if (auth) {
+    const tmp = auth.split(' ')
+    const buf = new Buffer(tmp[1], 'base64')
+    const plain_auth = buf.toString()
+    const creds = plain_auth.split(':')
+    const username = creds[0]
+    const password = creds[1]
+
+    if (isEmpty(username) && isEmpty(password)) {
+      res.status(HttpStatus.BAD_REQUEST).send({
+        result: [uname, pword],
+        message: '',
+        success: false,
+      })
+    } else if (isEmpty(username) && !isEmpty(password)) {
+      res.status(HttpStatus.BAD_REQUEST).send({
+        result: [uname],
+        message: '',
+        success: false,
+      })
+    } else if (!isEmpty(username) && isEmpty(password)) {
+      res.status(HttpStatus.BAD_REQUEST).send({
+        result: [pword],
+        message: '',
+        success: false,
+      })
+    } else if (username === 'undefined' && password === 'undefined') {
+      res.status(HttpStatus.BAD_REQUEST).send({
+        result: [uname, pword],
+        message: '',
+        success: false,
+      })
+    } else if (!isEmpty(username) && password === 'undefined') {
+      res.status(HttpStatus.BAD_REQUEST).send({
+        result: [pword],
+        message: '',
+        success: false,
+      })
+    } else if (username === 'undefined' && !isEmpty(password)) {
+      res.status(HttpStatus.BAD_REQUEST).send({
+        result: [uname],
+        message: '',
+        success: false,
+      })
+    } else {
+      next()
+    }
   }
 }
 

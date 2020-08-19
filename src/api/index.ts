@@ -16,7 +16,6 @@ class MainRoutes {
 
   private initAuth() {
     this.router.post('/auth', authValidator.validateLogin, authController.login)
-    this.router.get('/auth/profile', authController.profile)
   }
 
   private initCountries() {

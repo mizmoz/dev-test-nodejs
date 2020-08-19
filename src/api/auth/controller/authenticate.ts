@@ -1,15 +1,35 @@
-import { Response, Request, NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import HttpStatus from 'http-status-codes'
+import authenticate from '../services/authenticate'
 
-const login = (req: Request, res: Response, next: NextFunction) => {
+const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
-  } catch (err) {
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message })
-  }
-}
+    if (
+      !req.headers.authorization ||
+      req.headers.authorization.indexOf('Basic ') === -1
+    ) {
+      return res
+        .status(HttpStatus.UNAUTHORIZED)
+        .json({ message: 'Missing Authorization Header', success: false })
+    }
 
-const profile = (req: Request, res: Response, next: NextFunction) => {
-  try {
+    // verify auth credentials
+    const base64Credentials = req.headers.authorization.split(' ')[1]
+    const credentials = Buffer.from(base64Credentials, 'base64').toString(
+      'ascii',
+    )
+    const [username, password] = credentials.split(':')
+    const auth = await authenticate(username, password)
+    if (!auth) {
+      return res
+        .status(HttpStatus.UNAUTHORIZED)
+        .json({ message: 'Invalid Authentication Credentials', success: false })
+    }
+
+    res.status(HttpStatus.OK).send({
+      message: 'Authentication Success',
+      success: true,
+    })
   } catch (err) {
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message })
   }
@@ -17,5 +37,4 @@ const profile = (req: Request, res: Response, next: NextFunction) => {
 
 export default {
   login,
-  profile,
 }
