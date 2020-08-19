@@ -6,5 +6,5 @@
  */
 export default (username: string, password: string): Promise<boolean> =>
   new Promise<boolean>(resolve =>
-    resolve(username === "username" && password === "password"),
-  );
+    resolve(username === 'username' && password === 'password'),
+  )
