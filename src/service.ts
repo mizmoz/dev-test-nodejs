@@ -1,3 +1,5 @@
+import redis, { RedisClient } from 'redis';
+
 import { BaseServer } from './base/Server';
 import { Context, ServerContext } from './types';
 import { CountryModel } from './models/Country';
@@ -22,8 +24,16 @@ export default class Service extends BaseServer
 
   setUpDependency(cb : (err : Error | null) => void) {
     // connect to db or any thing
-    this.context.models.country = new CountryModel(countries);
-    cb(null);
+    const redisClient : RedisClient = redis.createClient({
+      host : process.env.REDIS_HOST,
+      port : Number(process.env.REDIS_PORT || 6379)
+    })
+
+    redisClient.on('connect', () => {
+      redisClient.set('countries', JSON.stringify(countries));
+      this.context.models.country = new CountryModel(redisClient, countries);
+      cb(null);
+    });
   }
 
   async applyRoutes(serverContext : ServerContext, context : Context) {

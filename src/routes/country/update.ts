@@ -12,6 +12,10 @@ export default class UpdateCountryRoute implements Routes
 
   setUpRoutes() {
     this.put('/countries');
+
+    // updating of countries should be here maybe after send the response
+    // however since the countries api listAll is mocking reject / resolve
+    // setting of updated countries, currently resides on the `CountryModel`
   }
 
   put(url : string) {

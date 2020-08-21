@@ -1,9 +1,13 @@
 import { BaseCountryModel, Country } from "../types";
+import { RedisClient } from "redis";
 
 export class CountryModel implements BaseCountryModel{
 
-  private countries : Country[];
-  constructor(countries : Country[]) {
+  private countries : Country[] = [];
+  private redisClient : RedisClient;
+
+  constructor(redisClient : RedisClient, countries : Country[]) {
+    this.redisClient = redisClient;
     this.countries = countries;
   }
 
@@ -25,6 +29,8 @@ export class CountryModel implements BaseCountryModel{
 
     country.name = data.name;
 
+    this.redisClient.set('countries', JSON.stringify(this.countries));
+
     return country;
   }
 
@@ -34,6 +40,7 @@ export class CountryModel implements BaseCountryModel{
     if (foundCountry) {
       const countries = this.countries.filter(country => code !== country.code);
       this.countries = countries;
+      this.redisClient.set('countries', JSON.stringify(this.countries));
       return true;
     }
 
@@ -52,6 +59,8 @@ export class CountryModel implements BaseCountryModel{
     }
 
     country.population = data.population;
+
+    this.redisClient.set('countries', JSON.stringify(this.countries));
 
     return country;
   }
