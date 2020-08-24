@@ -29,3 +29,9 @@ Feel free to use the internet including Google and Stackoverflow to help with th
 Please just ask.
 
 Good luck and thanks for taking the time to complete this task!
+
+## RUN
+
+ - make init
+ - make run_app.db
+ - make run_app.service
