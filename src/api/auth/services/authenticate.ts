@@ -6,5 +6,6 @@
  */
 export default (username: string, password: string): Promise<boolean> =>
   new Promise<boolean>(resolve =>
-    resolve(username === "username" && password === "password"),
-  );
+    // tslint:disable-next-line:tsr-detect-possible-timing-attacks
+    resolve(username === 'username' && password === 'password'),
+  )
