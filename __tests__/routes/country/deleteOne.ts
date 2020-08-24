@@ -2,6 +2,7 @@ import { CountryModel } from "./../../../src/models/country";
 import { Country } from "./../../../src/types";
 import * as http from 'http';
 import fetch from 'node-fetch';
+import redis, { RedisClient } from 'redis-mock';
 import DeleteCountryRoute from "../../../src/routes/country/deleteOne";
 
 describe('src/routes/country/list.ts', () => {
@@ -22,7 +23,8 @@ describe('src/routes/country/list.ts', () => {
       code : 'b'
     }];
     
-    countryModel = new CountryModel(mockCountries);
+    const redisClient : RedisClient = redis.createClient();
+    countryModel = new CountryModel(redisClient, mockCountries);
 
     countryModelGetOneSpy = jest.spyOn(countryModel, 'getOne');
     countryModelDeleteOneSpy = jest.spyOn(countryModel, 'getOne');

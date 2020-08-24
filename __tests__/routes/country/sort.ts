@@ -2,6 +2,7 @@ import { CountryModel } from "./../../../src/models/country";
 import { Country } from "./../../../src/types";
 import * as http from 'http';
 import fetch from 'node-fetch';
+import redis, { RedisClient } from 'redis-mock';
 import SortCountryPopulationRoute from "../../../src/routes/country/sort";
 
 describe('src/routes/country/list.ts', () => {
@@ -23,7 +24,8 @@ describe('src/routes/country/list.ts', () => {
       population : 9
     }];
     
-    countryModel = new CountryModel(mockCountries);
+    const redisClient : RedisClient = redis.createClient();
+    countryModel = new CountryModel(redisClient, mockCountries);
 
     countryModelSpy = jest.spyOn(countryModel, 'sortCountries');
 

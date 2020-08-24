@@ -3,6 +3,7 @@ import { Country } from "./../../../src/types";
 import * as http from 'http';
 import ListCountriesRoute from "../../../src/routes/country/list";
 import fetch from 'node-fetch';
+import redis, { RedisClient } from 'redis-mock';
 
 describe('src/routes/country/list.ts', () => {
 
@@ -21,7 +22,8 @@ describe('src/routes/country/list.ts', () => {
       code : 'b'
     }];
     
-    countryModel = new CountryModel(mockCountries);
+    const redisClient : RedisClient = redis.createClient();
+    countryModel = new CountryModel(redisClient, mockCountries)
 
     countryModelSpy = jest.spyOn(countryModel, 'listAll');
 
