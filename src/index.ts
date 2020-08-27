@@ -4,7 +4,7 @@ import mainServer from './server'
 import redisClient from './redis'
 
 const hostname = 'localhost';
-const port = 5001;
+const port = 5000;
 
 const server = createServer(mainServer);
 

@@ -1,17 +1,10 @@
-#Specify a base image
 FROM node:alpine
 
-#Specify a working directory
-WORKDIR /usr/app
+WORKDIR '/app'
 
-#Copy the dependencies file
-COPY ./package.json ./
+COPY package.json .
+RUN yarn && yarn cache clean
+COPY . .
+# command intentionally left in Dockerfile just in case
 
-#Install dependencies
-RUN npm install 
-
-#Copy remaining files
-COPY ./ ./
-
-#Default command
-CMD ["npm","start"]
+CMD ["yarn", "start"]

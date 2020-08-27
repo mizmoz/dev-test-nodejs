@@ -1,12 +1,16 @@
 version: '3'
-services:
-  redis-server: 
-    image: 'redis'
-    command: ["redis-server", "--bind", "redis", "--port", "6379"]
 
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "6379:6379"
-  node-app:
-    build: .
-    ports:
-      - "5001:5001"
+    - "5000:5000"  
+    volumes:
+    - /app/node_modules
+    - .:/app
+    stdin_open: true
+
+  redis-server:
+    image: 'redis'
