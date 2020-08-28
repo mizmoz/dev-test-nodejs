@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+    container_name: cache
+    expose:
+      - 6379
+    command: ["redis-server", "--bind", "redis", "--port", "6379"]
+    ports:
+    - "6379:6379"
+    hostname: redis
+
+  app:
+    build: ./
+    volumes:
+      - ./:/var/www/app
+    links:
+      - redis
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_URL=redis://cache
+      - NODE_ENV=development
+      - PORT=3000
+    command:
+      sh -c 'npm i && npm run test && npm run build &&  npm run go:prod'
+
