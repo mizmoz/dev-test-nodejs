@@ -5,7 +5,7 @@ import redisClient from "../redis";
 
 export const getAll = async (req: Request, res: Response) => {
   const cachedCountries = await redisClient.getAsync("countries");
-  const arrayCountries = JSON.parse(cachedCountries);
+  const arrayCountries = JSON.parse(cachedCountries) || [];
   const ret = arrayCountries.map((country: Country) => {
     if (country && !country.hasOwnProperty("population")) {
       return {
@@ -36,12 +36,14 @@ export const getAll = async (req: Request, res: Response) => {
 
 export const add = async (req: Request, res: Response) => {
   const cachedCountries = await redisClient.getAsync("countries");
-  const arrayCountries = JSON.parse(cachedCountries);
+  const arrayCountries = JSON.parse(cachedCountries)|| [];
 
   const newItemKeys = Object.keys(req.body);
 
-  if (newItemKeys.includes("name") && newItemKeys.includes("code")) {
+  if (arrayCountries && newItemKeys.includes("name") && newItemKeys.includes("code")) {
     const { name, code, population = 0 }: Country = req.body;
+
+    console.log(arrayCountries)
     await redisClient.setAsync(
       "countries",
       JSON.stringify([...arrayCountries, { name, code, population }]),
@@ -54,7 +56,7 @@ export const add = async (req: Request, res: Response) => {
 
 export const edit = async (req: Request, res: Response) => {
   const cachedCountries = await redisClient.getAsync("countries");
-  const arrayCountries = JSON.parse(cachedCountries);
+  const arrayCountries = JSON.parse(cachedCountries) || [];
 
   const newItemKeys = Object.keys(req.body);
 
@@ -87,7 +89,7 @@ export const edit = async (req: Request, res: Response) => {
 
 export const remove = async (req: Request, res: Response) => {
   const cachedCountries = await redisClient.getAsync("countries");
-  const arrayCountries = JSON.parse(cachedCountries);
+  const arrayCountries = JSON.parse(cachedCountries) || [];
 
   const newItemKeys = Object.keys(req.body);
 
