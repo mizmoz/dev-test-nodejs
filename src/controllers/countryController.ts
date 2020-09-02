@@ -93,7 +93,7 @@ class CountryController {
           success: true
         })
       } else {
-        res
+        return res
           .status(404)
           .json({
             message: `Country doesn't exist!`,
@@ -199,7 +199,7 @@ class CountryController {
           success: true
         })
       } else {
-        res
+        return res
           .status(404)
           .json({
             message: `Country doesn't exist!`,
