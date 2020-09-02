@@ -32,11 +32,11 @@ export const login = async (req: Request, res: Response) => {
 
     await redisClient.set('isAuthorized', 'true');
 
-    res.status(200).send({
+    return res.status(200).send({
       message: 'Successful Authentication',
       success: true,
     })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    return res.status(500).json({ message: err.message })
   }
 }
