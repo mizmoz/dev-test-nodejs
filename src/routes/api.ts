@@ -45,12 +45,24 @@ router.get("/countries/:code", async (req: Request, res: Response) => {
 router.put("/countries/:code", async (req: Request, res: Response) => {
 
   const result = await CountryService.update(req.params.code, req.body);
+
+  if (!result) {
+    res.status(404);
+    res.json({error: 'country not found'});
+    return;
+  }
   res.json(result);
 });
 
 
 router.delete("/countries/:code", async (req: Request, res: Response) => {
   const result = await CountryService.remove(req.params.code);
+  if (!result) {
+    res.status(404);
+    res.json({error: 'country not found'});
+    return;
+  }
+
   res.json(result);
 });
 

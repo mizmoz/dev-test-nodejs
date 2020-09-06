@@ -2,7 +2,12 @@
 export interface Country {
   name: string;
   code: string;
-  population: number
+  population: number;
+}
+
+export interface CountryDTO {
+  name: string;
+  population: number;
 }
 
 

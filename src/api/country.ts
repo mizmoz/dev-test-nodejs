@@ -1,4 +1,4 @@
-import { Country, QueryParams } from "../types";
+import { Country, CountryDTO, QueryParams } from "../types";
 import { hGetAll, redisClient, zRange, zRevRange } from './redis-client';
 
 
@@ -36,23 +36,27 @@ export async function get(code: string): Promise<Partial<Country> | null> {
   return hGetAll(`country:${code}`) as Partial<Country>;
 }
 
-export function update(code: string, country: Country): Promise<Country> {
+export function update(code: string, countryDto: CountryDTO): Promise<Country> {
 
   // forced to use this due to inconsistent redis type defs
   return new Promise((resolve, reject) => {
-    redisClient.hmset(countryHashKey(code), 'code', country.code, 'population', country.population, 'name', country.name,
+    redisClient.hmset(countryHashKey(code), 'code', code, 'population', countryDto.population, 'name', countryDto.name,
       (err, res) => {
         if(err) {
           reject(err);
         }
 
-        redisClient.zadd(CountriesOrderedSet, country.population, code, (err2, res2) => {
+        redisClient.zadd(CountriesOrderedSet, countryDto.population, code, (err2, res2) => {
 
           if(err) {
             reject(err);
           }
 
-          resolve(country);
+          resolve({
+            code,
+            name: countryDto.name,
+            population: countryDto.population
+          });
 
         });
       }

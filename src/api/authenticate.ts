@@ -7,7 +7,7 @@
 import * as configs from '../configs';
 import { sign, verify } from 'jsonwebtoken';
 import { get } from './redis-client';
-import { createHmac } from 'crypto';
+import { createHmac, timingSafeEqual } from 'crypto';
 import { User } from '../types';
 
 
@@ -26,7 +26,7 @@ export async function authenticate(username: string, password: string): Promise<
 
   const user = JSON.parse(data) as User;
 
-  if (user.password !== hash) {
+  if ( !timingSafeEqual(Buffer.from(hash!), Buffer.from(user.password!)) ) {
     return null;
   }
 

@@ -31,6 +31,7 @@ function loadData() {
     client.on('connect', function() {
       console.log('Connected to redis, migrating countries.');
       countries.forEach(c => {
+        // building hash & sorted sets with population as weight.
         client.hmset(`country:${c.code}`, 'name', `${c.name}`, 'code', `${c.code}`, 'population', c.population);
         client.zadd(['countries_by_population', c.population, c.code]);
       });
@@ -61,12 +62,9 @@ function loadData() {
     // error timeout
     setTimeout(() => {
       reject(new Error('migration timeout'));
-    }, 60000);
+    }, 30000);
 
   });
 }
 
 return loadData();
-
-
-

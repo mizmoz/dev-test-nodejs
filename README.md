@@ -1,31 +1,32 @@
 # Nodejs Developer Test
 
-## The Task
+<em>Note: Development was done in Ubuntu machine, docker configs will not work on different OS.</em>
 
-Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
-complete all items, just make sure to show your understanding of the core technologies we use.
+## Installation and Setup(Ubuntu)
+1. create .env file by copying `.env.example` and setting the JWT configs, password encryption key & the credentials of 
+the admin user.
+  ```sh
+    $ cp .env.example .env
+    $ vim .env
+  ```
+  ```
+    JWT_SECRET=B736E86072085693C83959C5852D6507567A153911718EEC7AA8CF03C0B1734B
+    JWT_EXPIRES=1h
+    ADMIN_USERNAME=john.doe@cloudemployee.com
+    ADMIN_PASSWORD=NotAStrongPassword123!
+    SHA_SECRET=AA94EDA037D24415B4C559D480AD5971CA35472F00C9E162FDCBE19A79F6C745
+  ```
 
-1. Fork this repo
-2. Create an endpoint that allows the listing of the countries using the method from `src/api/country.ts`
-3. Create an endpoint to fetch all of the countries sorted by their population
-4. Allow the populations to be updated
-5. Allow countries to be updated
-6. Allow countries to be deleted 
-7. Add authentication using the `src/api/authenticate.ts` method
-8. When you're done commit your code and create a pull request
+2. Run the containers
+    ```sh
+    $ docker-compose up
+    ```
 
-Bonus points for
+## Endpoints
+Please see [ENDPOINTS.md](ENDPOINTS.md)
 
-1. Storing the data in Redis
-2. Allowing the app to be run from a docker-compose file
-
-A basic project outline has been created to help you get started quickly but feel free to start from scratch if you have a preferred setup.
-
-Feel free to use the internet including Google and Stackoverflow to help with the task
-
-## Any questions?
-
-Please just ask.
-
-Good luck and thanks for taking the time to complete this task!
+## Miscellaneous
+- I opted to just reset the country data everytime docker starts and just referenced this file for the country data `data_loader/countries.js`
+The population data there is not accurate I just modified some values so that the sorting can be tested.
+- Haven't had time to create unit tests(no experience applying it yet in javascript) but I'm willing to spend time on it if I can have an extension.
+ 
