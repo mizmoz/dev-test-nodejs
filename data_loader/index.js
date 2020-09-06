@@ -29,7 +29,8 @@ function loadCountries() {
     client.on('connect', function() {
       console.log('Connected to redis, migrating countries.');
       countries.forEach(c => {
-        client.hmset(`country:${c.code}`, 'name', `${c.name}`, 'code', `${c.code}`, 'population', `${c.population}`);
+        client.hmset(`country:${c.code}`, 'name', `${c.name}`, 'code', `${c.code}`, 'population', c.population);
+        client.zadd(['countries_by_population', c.population, c.code]);
       });
       console.log('Country data migration complete!');
       resolve(true);

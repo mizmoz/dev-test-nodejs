@@ -1,0 +1,14 @@
+const {
+  JWT_SECRET,
+  JWT_EXPIRES,
+  ADMIN_USERNAME,
+  ADMIN_PASSWORD
+} = process.env;
+
+
+export {
+  JWT_SECRET,
+  JWT_EXPIRES,
+  ADMIN_USERNAME,
+  ADMIN_PASSWORD
+};

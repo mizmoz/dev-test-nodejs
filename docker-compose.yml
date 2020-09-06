@@ -11,6 +11,11 @@ services:
       - 8080:8080
     depends_on:
       - redis
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES: ${JWT_EXPIRES}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
   redis:
     image: redis:6.0.7-alpine
     ports:
