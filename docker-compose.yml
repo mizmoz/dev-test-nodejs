@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: node_test_app
+    build: ./
+    volumes:
+      - ./:/app
+    command: "npm run start"
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES: ${JWT_EXPIRES}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      SHA_SECRET: ${SHA_SECRET}
+  redis:
+    image: redis:6.0.7-alpine
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_REPLICATION_MODE=master

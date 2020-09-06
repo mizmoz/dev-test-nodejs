@@ -1,14 +1,99 @@
-import countries from "../configs/country";
-import { Country } from "../types";
+import { Country, CountryDTO, QueryParams } from "../types";
+import { hGetAll, redisClient, zRange, zRevRange } from './redis-client';
+
+
+const CountriesOrderedSet = 'countries_by_population';
+function countryHashKey(code: string): string {
+  return `country:${code}`;
+}
+
+
 
 /**
- * API to get the countries, sometimes this fails.
+ * API to get the countries
  *
  */
-export default (): Promise<Array<Country>> =>
-  new Promise((resolve, reject) => {
-    setTimeout(
-      () => (Math.round(Math.random()) === 0 ? resolve(countries) : reject()),
-      100,
+export async function all(params: QueryParams): Promise< Array<Partial<Country>> > {
+  let rangeMethod = zRange;
+
+  if (params.sort && params.sort === 'population|desc') {
+    rangeMethod = zRevRange;
+  }
+
+  const sortedCodes = await rangeMethod(CountriesOrderedSet, 0 , -1) as any;
+  const countries: Array<Partial<Country>> = [];
+  let countryItem: Partial<Country>;
+
+  for (const c of sortedCodes) {
+    countryItem = await hGetAll(`country:${c}`);
+    countries.push(countryItem);
+  }
+
+  return countries;
+}
+
+export async function get(code: string): Promise<Partial<Country> | null> {
+  return hGetAll(`country:${code}`) as Partial<Country>;
+}
+
+export function update(code: string, countryDto: CountryDTO): Promise<Country> {
+
+  // forced to use this due to inconsistent redis type defs
+  return new Promise((resolve, reject) => {
+    redisClient.hmset(countryHashKey(code), 'code', code, 'population', countryDto.population, 'name', countryDto.name,
+      (err, res) => {
+        if(err) {
+          reject(err);
+        }
+
+        redisClient.zadd(CountriesOrderedSet, countryDto.population, code, (err2, res2) => {
+
+          if(err) {
+            reject(err);
+          }
+
+          resolve({
+            code,
+            name: countryDto.name,
+            population: countryDto.population
+          });
+
+        });
+      }
     );
-  });
+  })
+
+}
+
+
+
+export async function remove(code: string): Promise<Partial<Country> | null> {
+
+  const country = await hGetAll(countryHashKey(code)) as Partial<Country>;
+
+  if (!country) {
+    return null;
+  }
+
+  // forced to use this due to inconsistent redis type defs
+  return new Promise((resolve, reject) => {
+    redisClient.del(countryHashKey(code),
+      (err, res) => {
+        if (err) {
+          reject(err);
+        }
+
+        redisClient.zrem(CountriesOrderedSet, code, (err2, res2) => {
+
+          if (err2) {
+            reject(err);
+          }
+
+          resolve(country);
+
+        });
+      }
+    );
+  })
+
+}
