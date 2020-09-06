@@ -26,6 +26,7 @@ the admin user.
 Please see [ENDPOINTS.md](ENDPOINTS.md)
 
 ## Miscellaneous
+- I mistakenly pushed changes using my company email, tried rebase with amend but github seems to still track the original author.
 - I opted to just reset the country data everytime docker starts and just referenced this file for the country data `data_loader/countries.js`
 The population data there is not accurate I just modified some values so that the sorting can be tested.
 - Haven't had time to create unit tests(no experience applying it yet in javascript) but I'm willing to spend time on it if I can have an extension.
