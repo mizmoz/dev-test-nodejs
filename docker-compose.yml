@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: node_test_app
+    build: ./
+    volumes:
+      - ./:/app
+    command: "npm run start"
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
+  redis:
+    image: redis:6.0.7-alpine
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_REPLICATION_MODE=master
