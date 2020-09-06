@@ -1,4 +1,5 @@
 # Nodejs Developer Test
+Applicant: Warren Ngo <renapyron@gmail.com>
 
 <em>Note: Development was done in Ubuntu machine, docker configs will not work on different OS.</em>
 
