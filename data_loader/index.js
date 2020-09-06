@@ -1,5 +1,7 @@
 const countries = require('./countries');
 const redis = require('redis');
+const { ADMIN_USERNAME, ADMIN_PASSWORD, SHA_SECRET } = process.env;
+const crypto = require('crypto');
 
 const client = redis.createClient({
   host: 'redis',
@@ -23,7 +25,7 @@ const client = redis.createClient({
   },
 });
 
-function loadCountries() {
+function loadData() {
 
   return new Promise((resolve, reject) => {
     client.on('connect', function() {
@@ -32,20 +34,39 @@ function loadCountries() {
         client.hmset(`country:${c.code}`, 'name', `${c.name}`, 'code', `${c.code}`, 'population', c.population);
         client.zadd(['countries_by_population', c.population, c.code]);
       });
-      console.log('Country data migration complete!');
-      resolve(true);
 
-    });
+
+      console.log('Creating admin user w/ creds');
+      const hash = crypto.createHmac('sha256', SHA_SECRET)
+        .update(ADMIN_PASSWORD)
+        .digest('base64');
+
+      const u = {
+        username: ADMIN_USERNAME,
+        password: hash
+      }
+
+      client.set(`user:${ADMIN_USERNAME}`, JSON.stringify(u), (err, res) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          console.log('User created');
+          resolve(true);
+        });
+      });
+
+
 
     // error timeout
     setTimeout(() => {
       reject(new Error('migration timeout'));
-    }, 3000);
+    }, 60000);
 
-  })
+  });
 }
 
-loadCountries();
-return 0;
+return loadData();
+
 
 

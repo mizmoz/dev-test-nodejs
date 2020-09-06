@@ -67,7 +67,7 @@ export async function remove(code: string): Promise<Partial<Country> | null> {
 
   const country = await hGetAll(countryHashKey(code)) as Partial<Country>;
 
-  if(!country) {
+  if (!country) {
     return null;
   }
 
