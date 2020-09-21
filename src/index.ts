@@ -9,8 +9,15 @@ import mongoose from 'mongoose'
 const {
     PORT,
     DB,
-    DB_OPTIONS
-} = require('../config')
+    DB_NAME
+} = process.env
+
+const DB_OPTIONS = {
+    dbName: DB_NAME,
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
+}
 
 const server = restify.createServer()
 
@@ -19,11 +26,13 @@ const DB_CALLBACK = async (err: Error) => {
 
     if(c_count === 0)
         await mongoose.connection.db.collection('countries').insertMany(countries)
-        console.log('DB SUCCESS!!!')
+        
+    console.log('DB SUCCESS!!!')
 }
+
 /*
 * Database Connection */
-mongoose.connect(DB, DB_OPTIONS, DB_CALLBACK)
+mongoose.connect(DB!, DB_OPTIONS, DB_CALLBACK)
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error: '))
 
 //cors
