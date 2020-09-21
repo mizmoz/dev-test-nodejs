@@ -7,9 +7,6 @@ class GenericController {
         const params = req.body
 
         console.log(params)
-        //const { username } = await UserTransformer.verifyToken(token)
-
-        //let temp = `${username && username.length ? username: 'Nobody'} created something!`
 
         const element = await Model[route].create(params)
 
@@ -43,6 +40,40 @@ class GenericController {
         })
 
         res.send(elements)
+        return next()
+    }
+
+    async read(req: Request, res: Response, next: Next) {
+        const { route, _id } = req.params
+
+        const element = await Model[route].findOne({ _id })
+
+        res.send(200, element)
+        return next()
+    }
+
+    async update(req: Request, res: Response, next: Next) {
+        const { route, _id } = req.params
+        const params = req.body
+
+        const element = await Model[route].findOneAndUpdate(
+            { _id },
+            params,
+            {
+                new: true
+            }
+        )
+
+        res.send(200, element)
+        return next()
+    }
+
+    async delete(req: Request, res: Response, next: Next) {
+        const { route, _id } = req.params
+        
+        const { ok } = await Model[route].deleteOne({ _id })
+
+        res.send(200, { deleted: !!ok })
         return next()
     }
 }
