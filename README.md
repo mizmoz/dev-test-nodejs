@@ -16,4 +16,4 @@ Bonus points for
 
 1. Storing the data in Redis
 2. Allowing the app to be run from a docker-compose file
-  * 
+  * used mongodb
