@@ -39,6 +39,22 @@ server.use(restify.plugins.queryParser({
     mapParams: true
 }))
 
+//custom
+server.use((req, res, next) => {
+    let { params } = req
+
+    const {
+        id
+    } = params
+
+    if(id)
+        params._id = id
+
+    req.params = params
+
+    return next()
+})
+
 routes(server)
 
 server.listen(PORT, () => {
