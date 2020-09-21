@@ -1,9 +1,26 @@
+require('dotenv').config()
+
 import restify from 'restify'
-import {Request, Response, Next} from 'restify'
 import corsMiddleware from 'restify-cors-middleware'
-import country from './api/country'
+import routes from './api/route/index'
+import mongoose from 'mongoose'
+
+const {
+    PORT,
+    DB,
+    DB_OPTIONS
+} = require('../config')
 
 const server = restify.createServer()
+
+const DB_CALLBACK = (err: Error) => {
+    if(!err)
+        console.log('DB SUCCESS!!!')
+}
+/*
+* Database Connection */
+mongoose.connect(DB, DB_OPTIONS, DB_CALLBACK)
+mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error: '))
 
 //cors
 const cors = corsMiddleware({
@@ -14,20 +31,17 @@ const cors = corsMiddleware({
 server.pre(cors.preflight)
 server.use(cors.actual)
 
-const getAll =
-    (req: Request, res: Response, next: Next) => 
-        country()
-        .then(countries => {
-            res.send(countries)
-            next()
-        })
-        .catch(err => {
-            next(new Error('Something went wrong.'))
-        })
+//parsers
+server.use(restify.plugins.bodyParser({
+    mapParams: true
+}))
+server.use(restify.plugins.queryParser({
+    mapParams: true
+}))
 
-server.get('/countries', getAll)
+routes(server)
 
-server.listen(7000, () => {
+server.listen(PORT, () => {
     console.log('%s listening at %s', 'test', 'test');
 })
 
