@@ -3,6 +3,7 @@ require('dotenv').config()
 import restify from 'restify'
 import corsMiddleware from 'restify-cors-middleware'
 import routes from './api/route/index'
+import countries from "./configs/country";
 import mongoose from 'mongoose'
 
 const {
@@ -13,8 +14,11 @@ const {
 
 const server = restify.createServer()
 
-const DB_CALLBACK = (err: Error) => {
-    if(!err)
+const DB_CALLBACK = async (err: Error) => {
+    const c_count = await mongoose.connection.db.collection('countries').countDocuments()
+
+    if(c_count === 0)
+        await mongoose.connection.db.collection('countries').insertMany(countries)
         console.log('DB SUCCESS!!!')
 }
 /*
@@ -58,7 +62,7 @@ server.use((req, res, next) => {
 routes(server)
 
 server.listen(PORT, () => {
-    console.log('%s listening at %s', 'test', 'test');
+    console.log('%s listening at %s', server.name, server.url);
 })
 
 /*
