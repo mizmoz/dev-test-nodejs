@@ -7,21 +7,20 @@ import { basicAuth } from './middlewares/auth';
 
 const app: Application = express();
 
-app.use(cors());
-app.use(helmet());
-app.use(express.json());
-
+// routes
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.send({
         message: 'Node Dev Test',
-        author: 'delwynb'
+        author: 'delwynb 🚀'
     });
 });
 
 // middlewares
+app.use(cors());
+app.use(helmet());
+app.use(express.json());
 app.use(basicAuth);
 
-// routes
 app.use('/country', countryRoute);
 
 export { app };

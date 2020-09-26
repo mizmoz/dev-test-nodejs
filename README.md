@@ -62,7 +62,9 @@ complete all items, just make sure to show your understanding of the core techno
 
 # Bonus points for
 
-- [] Storing the data in Redis
+- [x] Storing the data in Redis
+    - App assumes redis server available at `120.0.0.1:6379`
+    - Countries saved to redis on first successful request, will no longer fail for awhile
 - [x] Allowing the app to be run from a docker-compose file
     - Build and Run App `docker-compose up --build`
 
