@@ -51,6 +51,34 @@ router.route('/:code').get((req: Request, res: Response) => {
         });
 });
 
+router.route('/:code').delete((req: Request, res: Response) => {
+    const { code } = req.params;
+
+    countryAPI()
+        .then(countries => {
+            const index = countries.findIndex(c => c.code === code.toLowerCase());
+
+            if (index) {
+                countries.splice(index, 1);
+                res.sendStatus(200);
+            } else {
+                res.status(404);
+                res.send({
+                    error: "Not Found",
+                    message: `Country code ${code} not found`
+                });
+            }
+        })
+        .catch(error => {
+            res.status(500);
+            res.send({
+                status: 500,
+                message: 'Failed to retrieve countries',
+                error
+            });
+        });
+});
+
 router.route('/:code').put((req: Request, res: Response) => {
     const { code } = req.params;
     const { name, population } = req.body;

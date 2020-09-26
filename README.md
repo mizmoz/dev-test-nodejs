@@ -33,7 +33,7 @@ complete all items, just make sure to show your understanding of the core techno
     ```
     - Verify using [http://localhost:3000/country/PHI](http://localhost:3000/country/PHI)
 - [x] Allow countries to be updated
-    - Update Country by Code
+    - Update Country Population and Name by Code
     - API `PUT localhost:3000/country/:code`
     - JSON BODY 
     ```
@@ -51,7 +51,11 @@ complete all items, just make sure to show your understanding of the core techno
         population: 110000000
     }
     ```
-- [] Allow countries to be deleted 
+- [x] Allow countries to be deleted 
+    - Delete Country by Code
+    - API `DELETE localhost:3000/country/:code`
+     ### Example Usage
+    - [http://localhost:3000/country/phi](http://localhost:3000/country/phi)
 - [] Add authentication using the `src/api/authenticate.ts` method
 - [] When you're done commit your code and create a pull request
 
