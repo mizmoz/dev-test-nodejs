@@ -1,0 +1,11 @@
+version: '3'
+services:
+  app:
+    container_name: delwynb-test
+    build: .
+    image: delwynb/dev-test-nodejs:latest
+    volumes:
+        - .:/app
+        - /app/node_modules
+    ports:
+      - "3000:3000"

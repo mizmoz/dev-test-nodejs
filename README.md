@@ -63,7 +63,8 @@ complete all items, just make sure to show your understanding of the core techno
 # Bonus points for
 
 - [] Storing the data in Redis
-- [] Allowing the app to be run from a docker-compose file
+- [x] Allowing the app to be run from a docker-compose file
+    - Build and Run App `docker-compose up --build`
 
 A basic project outline has been created to help you get started quickly but feel free to start from scratch if you have a preferred setup.
 
