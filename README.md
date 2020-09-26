@@ -56,8 +56,9 @@ complete all items, just make sure to show your understanding of the core techno
     - API `DELETE localhost:3000/country/:code`
      ### Example Usage
     - [http://localhost:3000/country/phi](http://localhost:3000/country/phi)
-- [] Add authentication using the `src/api/authenticate.ts` method
-- [] When you're done commit your code and create a pull request
+- [x] Add authentication using the `src/api/authenticate.ts` method
+    - Added basic authentication middleware
+- [x] When you're done commit your code and create a pull request
 
 # Bonus points for
 

@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import countryRoute from './routes/countryRoute';
+import { basicAuth } from './middlewares/auth';
 
 const app: Application = express();
 
@@ -18,6 +19,7 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 // middlewares
+app.use(basicAuth);
 
 // routes
 app.use('/country', countryRoute);
