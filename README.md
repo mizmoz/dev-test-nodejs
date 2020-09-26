@@ -12,8 +12,8 @@ complete all items, just make sure to show your understanding of the core techno
 - [x] Create an endpoint to fetch all of the countries sorted by their population
     - API `GET localhost:3000/country`
     - PARAMS `sort? 'asc' or 'desc' defaults to 'asc'`
-    ### Example Usage
-    [localhost:3000/country?sort=desc](localhost:3000/country?sort=desc)
+    ##### Example Usage
+    [localhost:3000/country?sort=desc]
 - [x] Allow the populations to be updated
     - Update Country Population by Code
     - API `PUT localhost:3000/country/:code`
@@ -23,14 +23,14 @@ complete all items, just make sure to show your understanding of the core techno
         population: 110000000
     }
     ```
-    ### Example Usage
-    [localhost:3000/country/phi](localhost:3000/country/phi)
+    ##### Example Usage
+    [localhost:3000/country/phi]
     with body ```
     {
         population: 110000000
     }
     ```
-    - Verify using [localhost:3000/country/PHI](localhost:3000/country/PHI)
+    - Verify using [localhost:3000/country/PHI]
 - [x] Allow countries to be updated
     - Update Country by Code
     - API `PUT localhost:3000/country/:code`
@@ -42,7 +42,7 @@ complete all items, just make sure to show your understanding of the core techno
     }
     ```
     ### Example Usage
-    [localhost:3000/country/phi](localhost:3000/country/phi)
+    [localhost:3000/country/phi]
     with body ```
     {
         name: 'New Philippines'
