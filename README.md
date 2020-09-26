@@ -1,4 +1,4 @@
-# Nodejs Developer Test
+# Nodejs Developer Test by delwynb 🚀
 
 ## The Task
 
@@ -13,7 +13,7 @@ complete all items, just make sure to show your understanding of the core techno
     - API `GET localhost:3000/country`
     - PARAMS `sort? 'asc' or 'desc' defaults to 'asc'`
     ##### Example Usage
-    [localhost:3000/country?sort=desc]
+    - [http://localhost:3000/country?sort=desc] (http://localhost:3000/country?sort=desc)
 - [x] Allow the populations to be updated
     - Update Country Population by Code
     - API `PUT localhost:3000/country/:code`
@@ -24,14 +24,14 @@ complete all items, just make sure to show your understanding of the core techno
     }
     ```
     ##### Example Usage
-    [localhost:3000/country/phi]
+    [http://localhost:3000/country/phi](http://localhost:3000/country/phi)
     - with JSON Body
     ```
     {
         population: 110000000
     }
     ```
-    - Verify using [localhost:3000/country/PHI]
+    - Verify using [http://localhost:3000/country/PHI](http://localhost:3000/country/PHI)
 - [x] Allow countries to be updated
     - Update Country by Code
     - API `PUT localhost:3000/country/:code`
@@ -43,7 +43,7 @@ complete all items, just make sure to show your understanding of the core techno
     }
     ```
     ### Example Usage
-    - [localhost:3000/country/phi]
+    - [http://localhost:3000/country/phi](http://localhost:3000/country/phi)
     - with JSON Body 
     ```
     {
