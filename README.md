@@ -17,7 +17,7 @@ complete all items, just make sure to show your understanding of the core techno
 - [x] Allow the populations to be updated
     - Update Country Population by Code
     - API `PUT localhost:3000/country/:code`
-    - BODY 
+    - JSON BODY 
     ```
     {
         population: 110000000
@@ -25,7 +25,8 @@ complete all items, just make sure to show your understanding of the core techno
     ```
     ##### Example Usage
     [localhost:3000/country/phi]
-    with body ```
+    - with JSON Body
+    ```
     {
         population: 110000000
     }
@@ -34,7 +35,7 @@ complete all items, just make sure to show your understanding of the core techno
 - [x] Allow countries to be updated
     - Update Country by Code
     - API `PUT localhost:3000/country/:code`
-    - BODY 
+    - JSON BODY 
     ```
     {
         name: 'New Philippines'
@@ -42,8 +43,9 @@ complete all items, just make sure to show your understanding of the core techno
     }
     ```
     ### Example Usage
-    [localhost:3000/country/phi]
-    with body ```
+    - [localhost:3000/country/phi]
+    - with JSON Body 
+    ```
     {
         name: 'New Philippines'
         population: 110000000
