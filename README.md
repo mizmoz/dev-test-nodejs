@@ -6,9 +6,12 @@ Create a simple node service that provides provides some endpoints to allow the 
 list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
 complete all items, just make sure to show your understanding of the core technologies we use.
 
-1. Fork this repo
-2. Create an endpoint that allows the listing of the countries using the method from `src/api/country.ts`
-3. Create an endpoint to fetch all of the countries sorted by their population
+1. [x] Fork this repo
+2. [x] Create an endpoint that allows the listing of the countries using the method from `src/api/country.ts`
+    - API `GET localhost:3000/country`
+3. [x] Create an endpoint to fetch all of the countries sorted by their population
+    - API `GET localhost:3000/country`
+        `PARAMS sort? 'asc' or 'desc' defaults to 'asc'`
 4. Allow the populations to be updated
 5. Allow countries to be updated
 6. Allow countries to be deleted 
