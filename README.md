@@ -31,16 +31,23 @@ Allowing the app to be run from a docker-compose file | :heavy_check_mark:
 - Docker
 - Docker compose
 
-Setup `env` files:
+Setup `env` files and install dependencies:
 
 ```bash
 cp .env.example .env
+npm install
 ```
 
 Build containers:
 
 ```bash
 docker-compose up -d --build
+```
+
+Seed data:
+
+```bash
+./node_modules/ts-node/dist/bin.js ./src/scripts/seed-countries.ts
 ```
 
 Visit http://localhost:3000
