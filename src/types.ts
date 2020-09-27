@@ -1,5 +1,4 @@
-
-export interface Country {
-  name: string;
-  code: string;
+export enum SortOrder {
+  ASCENDING = "asc",
+  DESCENDING = "desc"
 }

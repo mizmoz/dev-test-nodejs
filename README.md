@@ -31,9 +31,21 @@ Allowing the app to be run from a docker-compose file | :heavy_check_mark:
 - Docker
 - Docker compose
 
+Setup `env` files:
+
+```bash
+cp .env.example .env
+```
+
+Build containers:
+
 ```bash
 docker-compose up -d --build
 ```
+
+Visit http://localhost:3000
+
+**Note:** If you want to change the port, just replace `NODE_PORT` in the `.env` file and run `docker-compose up -d`
 
 To get into `redis-cli`:
 
