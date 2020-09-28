@@ -1,31 +1,70 @@
 # Nodejs Developer Test
 
-## The Task
+This project was forked from https://github.com/mizmoz/dev-test-nodejs
 
-Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
-complete all items, just make sure to show your understanding of the core technologies we use.
+## Task report
 
-1. Fork this repo
-2. Create an endpoint that allows the listing of the countries using the method from `src/api/country.ts`
-3. Create an endpoint to fetch all of the countries sorted by their population
-4. Allow the populations to be updated
-5. Allow countries to be updated
-6. Allow countries to be deleted 
-7. Add authentication using the `src/api/authenticate.ts` method
-8. When you're done commit your code and create a pull request
+Below are the list of tasks for this project. I worked on it for 4 hours, making sure implementation and unit tests work.
 
-Bonus points for
+Task name | Completed?
+--- | ---
+Fork this repo | :heavy_check_mark:
+Create an endpoint that allows the listing of the countries using the method from `src/api/country.ts` | :heavy_check_mark:
+Create an endpoint to fetch all of the countries sorted by their population | :heavy_check_mark:
+Allow the populations to be updated | 
+Allow countries to be updated | 
+Allow countries to be deleted |
+Add authentication using the `src/api/authenticate.ts` method |
+When you're done commit your code and create a pull request | :heavy_check_mark:
 
-1. Storing the data in Redis
-2. Allowing the app to be run from a docker-compose file
+### Bonus points
 
-A basic project outline has been created to help you get started quickly but feel free to start from scratch if you have a preferred setup.
+Task name | Completed?
+--- | ---
+Storing the data in Redis | :heavy_check_mark:
+Allowing the app to be run from a docker-compose file | :heavy_check_mark:
 
-Feel free to use the internet including Google and Stackoverflow to help with the task
+### Installation
 
-## Any questions?
+**Prerequisites:**
 
-Please just ask.
+- Docker
+- Docker compose
 
-Good luck and thanks for taking the time to complete this task!
+Setup `env` files and install dependencies:
+
+```bash
+cp .env.example .env
+npm install
+```
+
+Build containers:
+
+```bash
+docker-compose up -d --build
+```
+
+Seed data:
+
+```bash
+./node_modules/ts-node/dist/bin.js ./src/scripts/seed-countries.ts
+```
+
+Visit http://localhost:3000
+
+**Note:** If you want to change the port, just replace `NODE_PORT` in the `.env` file and run `docker-compose up -d`
+
+To get into `redis-cli`:
+
+```bash
+docker-compose exec redis sh
+
+# In redis container:
+redis-cli
+```
+
+### Unit tests
+
+```bash
+npm test
+```
