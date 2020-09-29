@@ -1,0 +1,11 @@
+
+version: "2"
+services:
+  app:
+    container_name: stevepabatao
+    image: docker-test
+    restart: always
+    build: .
+    ports:
+        - "2133:2133"
+
