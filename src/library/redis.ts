@@ -1,8 +1,6 @@
 import redis, { RedisClient } from 'redis';
 import bluebird from 'bluebird';
 
-// bluebird.promisifyAll(redis.RedisClient.prototype);
-
 const client = bluebird.promisifyAll(
   redis.createClient(
     process.env.REDIS_URI || 'redis://localhost',

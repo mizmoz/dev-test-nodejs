@@ -5,7 +5,7 @@ import redis, { shutdownRedis } from '../../../src/library/redis';
 import { Country } from '../../../src/types';
 import { seed } from '../../../src/seeders/add-country-data';
 
-describe('Country Operations', () => {
+describe('Country Operations Integration Test', () => {
   beforeAll(async () => {
     await seed();
   });
@@ -108,7 +108,7 @@ describe('Country Operations', () => {
       expect(parseData).to.have.property('population', 10);
     });
 
-    it('should thrown an error if code is not provided', async () => {
+    it('should throw an error if code is not provided', async () => {
       const response = await supertest(app)
         .post(`/country`)
         .send({
