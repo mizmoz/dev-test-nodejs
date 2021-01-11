@@ -1,7 +1,7 @@
 module.exports = {
   restoreMocks: true,
-  roots: ["<rootDir>/src"],
+  roots: ['<rootDir>/test'],
   transform: {
-    "^.+\\.ts?$": "ts-jest",
+    '^.+\\.ts?$': 'ts-jest',
   },
 };
