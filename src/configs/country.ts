@@ -16,7 +16,6 @@ export default [
   }, {
     name: 'ANDORRA',
     code: 'and',
-    population: 100
   }, {
     name: 'ANGOLA',
     code: 'ang',
