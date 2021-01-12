@@ -36,3 +36,6 @@ curl \
 --data '{ "query": "mutation { deleteCountry(code: \"and\") }" }' \
 http://localhost:8000/graphql
 ```
+
+### testing with graphiql
+You can test the api at http://localhost:8000/graphql when running the app locally
