@@ -1,62 +1,25 @@
-import express, { Application, Request, Response } from 'express'
-import { Country } from './types'
-import { orderBy, findIndex, isNaN } from 'lodash'
+import main from "./main";
 
-import authMiddleware from './middlewares/auth'
-import countryAPI from './api/country'
+const app: any = {};
 
-let countries : Country[]
+function gracefulExit(): void {
+  const { httpServer } = app;
 
-countryAPI().then((result) => { countries = result })
+  if (httpServer) httpServer.close();
 
-const app: Application = express()
+  process.exit(0);
+}
 
-app.use(authMiddleware)
+const signals: NodeJS.Signals[] = ["SIGINT", "SIGTERM"];
 
-app.get('/', (req: Request, res: Response) =>{
-  res.send('Welcome')
-})
+signals.forEach((signal) => {
+  process.on(signal, gracefulExit);
+});
 
-app.get('/countries', (req: Request, res: Response) =>{
-  res.send(countries)
-})
-
-app.get('/sort/:order', (req: Request, res: Response) =>{
-  if (req.params.order !== 'asc' && req.params.order !== 'desc') return res.send('Order should be asc/desc')
-
-  res.send(orderBy(countries, ['population'], [req.params.order]))
-})
-
-app.put('/update/population/:code/:population', (req: Request, res: Response) => {
-  const index : number = findIndex(countries, ['code', req.params.code])
-
-  if(index < 0) return res.send('Country code does not exist.')
-  const population : any = parseInt(req.params.population)
-
-  if (isNaN(population)) return res.send('Population should be a number.')
-
-  countries[index].population = population
-
-  res.send(countries[index])
-})
-
-app.put('/update/country/:code/:name', (req: Request, res: Response) => {
-  const index : number = findIndex(countries, ['code', req.params.code])
-
-  if(index < 0) return res.send('Country code does not exist.')
-
-  countries[index].name = req.params.name
-  res.send(countries[index])
-})
-
-app.delete('/delete/country/:code', (req: Request, res: Response) => {
-  const index : number = findIndex(countries, ['code', req.params.code])
-
-  if(index < 0) return res.send('Country code does not exist.')
-
-  countries.splice(index, 1)
-
-  res.send(countries)
-})
-
-app.listen(8000, () => console.log('Server running on port 8000'))
+main()
+  .then((obj: any) => {
+    Object.assign(app, obj);
+  })
+  .catch((err: Error) => {
+    throw err;
+  });
