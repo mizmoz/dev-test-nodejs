@@ -1,0 +1,8 @@
+version: "3.7"
+
+services:
+  dev-test:
+    build: ./
+    container_name: dev-test
+    ports:
+      - "8000:8000"
