@@ -3,7 +3,9 @@ import fastify from "fastify";
 import redis from "fastify-redis";
 import serialize from "fast-safe-stringify";
 
-import router from "./api/country/router";
+import routerAuth from "./api/authenticate/router";
+import routerCountry from "./api/country/router";
+
 import countries from "./configs/country";
 
 const server = fastify();
@@ -14,7 +16,11 @@ server.register(redis, {
   port: process.env.REDIS_PORT || 6379
 });
 
-server.register(router);
+server.register(routerAuth);
+server.register(routerCountry);
+
+// TOCHECKER: this is connected to auth (see ./authenticate/router.ts notes)
+// server.addHook('preValidation', JWT_SERVICE_FUNCTION_HERE)
 
 server.get("/", async () => {
   return {
