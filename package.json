@@ -14,6 +14,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.168",
+    "fastify": "^3.11.0",
+    "lodash": "^4.17.20"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
