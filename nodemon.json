@@ -1,6 +1,14 @@
 {
-  "ignore": ["**/*.test.ts", "**/*.spec.ts", ".git", "node_modules"],
-  "watch": ["src"],
-  "exec": "yarn go",
-  "ext": "ts"
+  "watch": [
+    "src",
+    "lib",
+    "config",
+    "runner.ts",
+    ".env"
+  ],
+  "ext": "ts",
+  "ignore": [
+    "__tests__/**/*"
+  ],
+  "exec": "yarn start"
 }

@@ -1,31 +1,78 @@
-# Nodejs Developer Test
+# Archax Tech Test by Ian Mark Muninio
 
-## The Task
+## Prerequisites
 
-Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
-complete all items, just make sure to show your understanding of the core technologies we use.
+- Nodejs 14
+- Docker
+- Yarn
 
-1. Fork this repo
-2. Create an endpoint that allows the listing of the countries using the method from `src/api/country.ts`
-3. Create an endpoint to fetch all of the countries sorted by their population
-4. Allow the populations to be updated
-5. Allow countries to be updated
-6. Allow countries to be deleted 
-7. Add authentication using the `src/api/authenticate.ts` method
-8. When you're done commit your code and create a pull request
+---
 
-Bonus points for
+## Setup and starting
 
-1. Storing the data in Redis
-2. Allowing the app to be run from a docker-compose file
+1. Install dependencies using yarn. Make sure you are using node ***14*** version.
+```sh
+$ yarn install
+```
 
-A basic project outline has been created to help you get started quickly but feel free to start from scratch if you have a preferred setup.
+2. Run docker containers using `docker-compose`.
+```sh
+docker-compose up [-d]
+```
 
-Feel free to use the internet including Google and Stackoverflow to help with the task
+3. Start the application.
+```sh
+yarn start
+```
 
-## Any questions?
+For auto reloading
+```sh
+yarn dev
+```
 
-Please just ask.
+You can set the environment variables of the application using `dotenv` if you want to customize the application. Tho you need to make sure that you import the redis data under `<root>/data/redis` so all country data is available.
 
-Good luck and thanks for taking the time to complete this task!
+> The `dotenv` only works on development for security purposes.
+
+Create a file `.env` under the `<root>` folder.
+
+Environment variable table.
+
+Key | Value
+--- | ---
+`HTTP_PORT` | The server port when starting the server. Default value is `8081`.
+`REDIS_HOST` | The redis host url. Default value is `127.0.0.1`.
+`REDIS_PASSWORD` | The redis password. Default value is `null`.
+`REDIS_PORT` | The redis port to use. Default value is `6370`.
+
+---
+
+## API
+
+Endpoint | Description
+--- | ---
+`GET /countries` | List all countries. Sortable by population. `?population=1`.
+`GET /countries/:code` | Get the country by code.
+`PUT /countries/:code/population` | Updates the population of a country. `{ population: number; }`
+`PUT /countries/:code` | Update the country information. `{ name?: string; coordinates?: [number, number]; }`
+`DEL /countries/:code` | Delete the specified country.
+
+> Those with `:code` params, if the provided `:code` doesn't exist, the server will throw a `404 Bad Request` with a some small information of the error.
+
+> For unknown error, for e.g. operation error, it will requtnr a `500 Internal Server Error` with information of the error.
+
+All endpoints are private so you need to authenticate.
+
+For now we are using `Basic` authentication.
+
+Username | Password
+--- | ---
+`archax` | `p@$$m3plz`
+
+---
+
+## Developer Note
+
+I haven't tried to compiled this for production use so much better to run this in uncompiled mode using `ts-node`.
+
+I didn't create any unit tests and integration tests.
