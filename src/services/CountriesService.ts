@@ -12,7 +12,7 @@ export class CountriesService {
     this.client = Container.get(RedisService).client;
   }
 
-  async getCountries() {
+  async getCountries(sort?: "asc" | "desc") {
     const getCountries = new Promise<{ [k: string]: { name: string } }>(
       (resolve, reject) => {
         this.client.keys("country.*", (err, keysReply) => {
@@ -45,18 +45,33 @@ export class CountriesService {
     );
 
     const getPopulations = new Promise<string[]>((resolve, reject) => {
-      this.client.zrevrange(
-        "countriesByPopulation",
-        0,
-        -1,
-        "WITHSCORES",
-        (err, data) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(data);
-        },
-      );
+      if (sort === "asc") {
+        this.client.zrange(
+          "countriesByPopulation",
+          0,
+          -1,
+          "WITHSCORES",
+          (err, data) => {
+            if (err) {
+              reject(err);
+            }
+            resolve(data);
+          },
+        );
+      } else {
+        this.client.zrevrange(
+          "countriesByPopulation",
+          0,
+          -1,
+          "WITHSCORES",
+          (err, data) => {
+            if (err) {
+              reject(err);
+            }
+            resolve(data);
+          },
+        );
+      }
     });
 
     try {

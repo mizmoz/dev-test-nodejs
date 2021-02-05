@@ -1,4 +1,10 @@
-import { IsString, IsNumber, IsOptional } from "class-validator";
+import { IsString, IsNumber, IsIn, IsOptional } from "class-validator";
+
+export abstract class GetCountriesQueryParams {
+  @IsOptional()
+  @IsIn(["asc", "desc"])
+  abstract sort?: "asc" | "desc";
+}
 
 export abstract class CreateCountryBody {
   @IsString()

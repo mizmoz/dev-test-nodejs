@@ -5,7 +5,7 @@
 - Create an endpoint that allows the listing of the countries using the method from `src/api/country.ts`
   - `GET /countries/error-prone`
 - Create an endpoint to fetch all of the countries sorted by their population
-  - `GET /countries`
+  - `GET /countries?sort={ desc (default) | asc }`
 - Allow the populations to be updated
   - `PUT/PATCH /countries/:countryCode`
 - Allow countries to be updated

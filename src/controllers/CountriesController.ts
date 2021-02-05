@@ -8,6 +8,7 @@ import {
   Delete,
   InternalServerError,
   Param,
+  QueryParams,
   Body,
 } from "routing-controllers";
 import { Container } from "typedi";
@@ -15,6 +16,7 @@ import { Container } from "typedi";
 import { CountriesService } from "../services/CountriesService";
 import getCountriesErrorProne from "../api/country";
 import {
+  GetCountriesQueryParams,
   CreateCountryBody,
   UpdateCountryBody,
 } from "./CountriesControllerValidators";
@@ -29,8 +31,8 @@ export class CountriesController {
 
   @Authorized()
   @Get("/")
-  async getAllCountries() {
-    return this.countries.getCountries();
+  async getAllCountries(@QueryParams() { sort }: GetCountriesQueryParams) {
+    return this.countries.getCountries(sort);
   }
 
   @Authorized()
