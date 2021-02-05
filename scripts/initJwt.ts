@@ -1,6 +1,7 @@
 import process from "process";
 import dotenv from "dotenv";
 import fs from "fs";
+import path from "path";
 
 import { createPrivateKey, createPublicKey } from "./keyFileGenerators";
 
@@ -20,12 +21,14 @@ if (typeof process.env.JWT_PUBLIC_KEY_PATH === "undefined") {
 
 const privateKeyPath = process.env.JWT_PRIVATE_KEY_PATH;
 const privateKeyExists = fs.existsSync(privateKeyPath);
-const privateKeyPathIsDir = fs.lstatSync(privateKeyPath).isDirectory();
+const privateKeyPathIsDir =
+  privateKeyExists && fs.lstatSync(privateKeyPath).isDirectory();
 const privateKeyPathIsValid = privateKeyExists && !privateKeyPathIsDir;
 
 const publicKeyPath = process.env.JWT_PUBLIC_KEY_PATH;
 const publicKeyExists = fs.existsSync(publicKeyPath);
-const publicKeyPathIsDir = fs.lstatSync(publicKeyPath).isDirectory();
+const publicKeyPathIsDir =
+  privateKeyExists && fs.lstatSync(publicKeyPath).isDirectory();
 const publicKeyPathIsValid = publicKeyExists && !publicKeyPathIsDir;
 
 if (!privateKeyPathIsValid) {
@@ -35,9 +38,13 @@ if (!privateKeyPathIsValid) {
     fs.rmdirSync(privateKeyPath, { recursive: true });
   }
 
+  fs.mkdirSync(path.join(privateKeyPath, ".."), { recursive: true });
+
   if (publicKeyPathIsDir) {
     fs.rmdirSync(publicKeyPath, { recursive: true });
   }
+
+  fs.mkdirSync(path.join(publicKeyPath, ".."), { recursive: true });
 
   createPrivateKey(privateKeyPath)
     .then(() => {
@@ -54,6 +61,8 @@ if (!privateKeyPathIsValid) {
   if (publicKeyPathIsDir) {
     fs.rmdirSync(publicKeyPath, { recursive: true });
   }
+
+  fs.mkdirSync(path.join(publicKeyPath, ".."), { recursive: true });
 
   createPublicKey(privateKeyPath, publicKeyPath)
     .then(() => {
