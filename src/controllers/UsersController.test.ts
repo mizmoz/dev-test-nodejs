@@ -4,11 +4,11 @@ import jwt from "jsonwebtoken";
 
 import { initializeApp, AppContainer } from "../app";
 
-describe("/users/login Test Suite", () => {
-  beforeAll(() => {
-    initializeApp();
-  });
+beforeAll(() => {
+  initializeApp();
+});
 
+describe("POST /users/login Test Suite", () => {
   test("route exists", done => {
     request(Container.get(AppContainer).app)
       .post("/users/login")

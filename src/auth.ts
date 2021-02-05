@@ -75,7 +75,9 @@ export const authorizationChecker = async (action: Action) => {
     }
     return false;
   } catch (e) {
-    console.error(e);
+    if (e.message === "jwt malformed") {
+      throw new BadRequestError("Access token should be in valid JWT format.");
+    }
     return false;
   }
 };

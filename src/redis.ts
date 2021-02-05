@@ -15,7 +15,6 @@ export const initializeRedis = (redisUrl: string) => {
 
   return new Promise<void>(resolve => {
     redisClient.on("ready", () => {
-      console.log("Redis is connected.");
       resolve();
     });
   });

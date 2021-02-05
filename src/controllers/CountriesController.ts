@@ -46,7 +46,7 @@ export class CountriesController {
   }
 
   @Authorized()
-  @Post()
+  @Post("/")
   async createCountry(@Body() body: CreateCountryBody) {
     return this.countries.createCountry(body);
   }
