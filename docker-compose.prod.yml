@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  redis:
+    image: redis
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app-prod/Dockerfile
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - JWT_PRIVATE_KEY_PATH=/app/keys/jwtRS256.key
+      - JWT_PUBLIC_KEY_PATH=/app/keys/jwtRS256.key.pub
+    volumes:
+      - ./.env:/app/.env
+      - "${JWT_PRIVATE_KEY_PATH}:/app/keys/jwtRS256.key"
+      - "${JWT_PUBLIC_KEY_PATH}:/app/keys/jwtRS256.key.pub"
+    depends_on:
+      - redis

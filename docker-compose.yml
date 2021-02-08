@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  redis:
+    ports:
+      - "${DOCKER_DEV_REDIS_PORT}:6379"
+    image: redis
+  app:
+    image: node:14
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - .:/app
+      - ./docker/app-dev/node_modules:/app/node_modules
+    working_dir: /app
+    command: yarn start-docker
+    depends_on:
+      - redis
