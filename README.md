@@ -3,7 +3,7 @@
 ## The Task
 
 Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
+list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to
 complete all items, just make sure to show your understanding of the core technologies we use.
 
 1. Fork this repo
@@ -11,7 +11,7 @@ complete all items, just make sure to show your understanding of the core techno
 3. Create an endpoint to fetch all of the countries sorted by their population
 4. Allow the populations to be updated
 5. Allow countries to be updated
-6. Allow countries to be deleted 
+6. Allow countries to be deleted
 7. Add authentication using the `src/api/authenticate.ts` method
 8. When you're done commit your code and create a pull request
 
@@ -29,3 +29,11 @@ Feel free to use the internet including Google and Stackoverflow to help with th
 Please just ask.
 
 Good luck and thanks for taking the time to complete this task!
+
+## How to use
+
+1. npm i
+2. docker-compose up -d
+3. point browser to localhost:8080 (now as localURL) with ?username=username&password=password (e.g. localhost:8080?username=username&password=password)
+4. see /postmanfiles to import postman collection and see how endpoints work
+5. PUT/PATCH/DELETE uses body raw json for the data to be edited

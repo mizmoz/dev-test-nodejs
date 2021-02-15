@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "35881c87-3e3a-4549-a971-f716225806cf",
+		"name": "nodejstest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080",
+					"host": [
+						"localhost"
+					],
+					"port": "8080"
+				},
+				"description": "Hello World"
+			},
+			"response": []
+		},
+		{
+			"name": "list countries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/list?username=username&password=password",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"list"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "username"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list countries sorted",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/listSorted?username=username&password=password&sort=desc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"listSorted"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "username"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						},
+						{
+							"key": "sort",
+							"value": "desc",
+							"description": "desc - descending order of population\nasc - ascending order of population"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editPopulation",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\":\"zam\",\n    \"newPop\": 9000000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/editPop?username=username&password=password",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"editPop"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "username"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit Country Name",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\":\"zam\",\n    \"newName\":\"zambino\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/editCountry?username=username&password=password",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"editCountry"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "username"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete Country",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\":\"zam\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/deleteCountry?username=username&password=password",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"deleteCountry"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "username"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Repopulate Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/repop?username=username&password=password",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"repop"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "username"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
