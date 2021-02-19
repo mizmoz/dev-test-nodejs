@@ -1,0 +1,48 @@
+GET http://localhost:9000/api/countries
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWF0IjoxNjEzNzYxNDY4LCJleHAiOjE2MTM3NjIzNjh9.Ix7AxJj6oHMzJwr5pPWKqHaqcVyk8rDlrgAWQlTGhQg
+
+###
+
+GET http://localhost:9000/api/countries/afg
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWF0IjoxNjEzNzYxNDY4LCJleHAiOjE2MTM3NjIzNjh9.Ix7AxJj6oHMzJwr5pPWKqHaqcVyk8rDlrgAWQlTGhQg
+
+###
+
+GET http://localhost:9000/api/countryPopulations
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWF0IjoxNjEzNzYxNDY4LCJleHAiOjE2MTM3NjIzNjh9.Ix7AxJj6oHMzJwr5pPWKqHaqcVyk8rDlrgAWQlTGhQg
+
+###
+
+POST http://localhost:9000/api/countryPopulations
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWF0IjoxNjEzNzYxNDY4LCJleHAiOjE2MTM3NjIzNjh9.Ix7AxJj6oHMzJwr5pPWKqHaqcVyk8rDlrgAWQlTGhQg
+Content-Type: application/json
+
+{
+    "country": "usa",
+    "population": 40
+}
+
+###
+
+DELETE http://localhost:9000/api/countryPopulations/usa
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWF0IjoxNjEzNzYxNDY4LCJleHAiOjE2MTM3NjIzNjh9.Ix7AxJj6oHMzJwr5pPWKqHaqcVyk8rDlrgAWQlTGhQg
+
+###
+
+POST http://localhost:9000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "username",
+    "password": "password"
+}
+
+###
+
+DELETE http://localhost:9000/api/auth/logout
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWF0IjoxNjEzNzYxNDY4LCJleHAiOjE2MTM3NjIzNjh9.Ix7AxJj6oHMzJwr5pPWKqHaqcVyk8rDlrgAWQlTGhQg
+
+###
+
+POST http://localhost:9000/api/auth/token
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWF0IjoxNjEzNzYzMDM1fQ.fu89f0ORi08beQQ37ApCBZY_7fSwkpTuN3tOR-mEtuU
