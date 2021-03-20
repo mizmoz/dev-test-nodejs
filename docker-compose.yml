@@ -6,8 +6,6 @@ redis:
 
 app:
   build: .
-  volumes:
-    - ./:/var/www/app
   ports: 
     - 3000:3000
   environment:

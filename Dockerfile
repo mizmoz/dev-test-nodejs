@@ -1,6 +1,6 @@
 FROM node:12.20.2
 
-WORKDIR /var/www/app
+WORKDIR /app
 
 COPY . .
 
