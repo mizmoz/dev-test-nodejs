@@ -1,0 +1,14 @@
+redis:
+  image: redis
+  container_name: redis-app
+  expose:
+    - 6379
+
+app:
+  build: .
+  volumes:
+    - ./:/var/www/app
+  ports: 
+    - 3000:3000
+  environment:
+    - NODE_ENV=production

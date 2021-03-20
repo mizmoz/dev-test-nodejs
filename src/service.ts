@@ -1,20 +1,55 @@
-import express from 'express';
+import express, { ErrorRequestHandler } from 'express';
+
+import {
+  login,
+  me,
+  register
+} from './api/authenticate';
+import {
+  deleteCountryByCode,
+  getCountries,
+  getCountryByCode,
+  seed,
+  updateCountryByCode,
+} from './api/country';
+import { verifyToken } from './middlewares/verifyToken';
+import { Context } from './utils';
 
 const app = express();
+
+const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
+  if (!error?.status) {
+    error.status = 500;
+  }
+
+  return res.status(error.status).json({ message: error.message });
+};
 
 // middlewares
 app.use(express.json());
 
-// temp routes
+// add context
+app.use((req, res, next) => {
+  Context.bind(req);
+  next();
+});
+
 // authenticate
-app.post('/authenticate/login', (req, res, next) => res.status(200).json({ message: 'login' }))
-app.post('/authenticate/register', (req, res, next) => res.status(200).json({ message: 'register' }))
-app.get('/authenticate/me', (req, res, next) => res.status(200).json({ message: 'me' }));
+app.post('/authenticate/login', login)
+app.post('/authenticate/register', register)
+app.get('/authenticate/me', verifyToken, me);
 
 // countries
-app.get('/countries', (req, res, next) => res.status(200).json({ message: 'getAllCountries' }))
-app.get('/countries/:code', (req, res, next) => res.status(200).json({ message: `getCountryByCode:${req.params.code}` }))
-app.patch('/countries/:code', (req, res, next) => res.status(200).json({ message: `updateCountryByCode:${req.params.code}` }))
-app.delete('/countries/:code', (req, res, next) => res.status(200).json({ message: `deleteCountryByCode:${req.params.code}` }));
+app.post('/countries/seed', seed);
+app.get('/countries', getCountries);
+app.get('/countries/:code', getCountryByCode);
+app.patch('/countries/:code', updateCountryByCode)
+app.delete('/countries/:code', deleteCountryByCode);
+
+// 404 handler
+app.use((req, res, next) => res.status(404).json({ message: 'Resource not found.' }));
+
+// error handler
+app.use(errorHandler);
 
 export default app;
