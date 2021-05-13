@@ -1,6 +1,6 @@
 import { Context, Next } from 'koa'
 
-import authenticate from './services/authenticate'
+import authenticate from './authenticate'
 
 export interface KoaError extends Error {
   statusCode?: number

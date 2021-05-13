@@ -1,11 +1,11 @@
 import { Context } from 'koa'
-import authenticate, { KoaError } from './authenticate'
-import auth from './services/authenticate'
+import authenticator, { KoaError } from './authenticator'
+import auth from './authenticate'
 
-jest.mock('./services/authenticate')
+jest.mock('./authenticate')
 const authService = auth as jest.Mock
 
-describe('authenticate', () => {
+describe('authenticator', () => {
   beforeEach(() => {
     jest.clearAllMocks
   })
@@ -20,7 +20,7 @@ describe('authenticate', () => {
 
     const next = jest.fn()
 
-    await authenticate(ctx, next)
+    await authenticator(ctx, next)
 
     expect(next).toHaveBeenCalledTimes(1)
     expect(authService).toHaveBeenCalledWith('user', 'pwd')
@@ -35,7 +35,7 @@ describe('authenticate', () => {
     } as Context
 
     let error: KoaError
-    await authenticate(ctx, Promise.resolve).catch(e => (error = e))
+    await authenticator(ctx, Promise.resolve).catch(e => (error = e))
 
     expect(error.message).toBe('Not Authenticated')
     expect(error.statusCode).toBe(401)
