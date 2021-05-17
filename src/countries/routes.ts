@@ -2,21 +2,21 @@ import Router from '@koa/router'
 import { Context } from 'koa'
 
 import authenticate from '../authenticator'
-import { getCountries, addCountry, deleteCountry } from './service'
+import { getCountries, addCountry, deleteCountry, updateCountry } from './service'
 
 const routes = new Router()
 
 routes.get('/', async (ctx: Context) => {
-  ctx.body = getCountries(ctx.query.sortBy as string | undefined)
+  ctx.body = await getCountries(ctx.query.sortBy as string | undefined)
 })
-routes.post('/', (ctx: Context) => {
+routes.post('/', async (ctx: Context) => {
   addCountry(ctx.request.body)
 })
-routes.patch('/', (ctx: Context) => {
-  // addCategory(ctx.request.body)
+routes.patch('/:id', async (ctx: Context) => {
+  updateCountry(ctx.params.id, ctx.request.body)
 })
-routes.delete('/:code', (ctx: Context) => {
-  deleteCountry(ctx.request.body)
+routes.delete('/:id', async (ctx: Context) => {
+  deleteCountry(ctx.params.id)
 })
 
-export default new Router().use('/categories', authenticate, routes.routes())
+export default new Router().use('/categories', /*authenticate,*/ routes.routes())
