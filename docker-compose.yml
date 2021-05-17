@@ -1,0 +1,23 @@
+# docker-compose.yml
+redis:
+  image: redis
+  container_name: cache
+  ports:
+      - "6379:6379"
+
+app:
+  build: ./
+  volumes:
+    - ./:/app
+  ports:
+    - 8080:8080
+  links:
+    - redis
+  environment:
+    - NODE_ENV=development
+    - PORT=8080
+    - REDIS_URL=redis://cache
+    - API_USERNAME=api-user
+    - API_PASSWORD=Vp9RFY2wQ2cXLyvn
+  command:
+    sh -c 'yarn && yarn start'
