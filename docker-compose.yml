@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  db:
+    image: redis
+    ports:
+      - '6379:6379'
+    container_name: 'redis-server'
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - REDIS_HOST=redis-server
+    ports:
+      - '3000:3000'

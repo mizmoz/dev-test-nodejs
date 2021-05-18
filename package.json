@@ -10,7 +10,7 @@
     "start-inspect": "nodemon --exec 'node --inspect -r ts-node/register src/index.ts'",
     "build": "tsc",
     "go": "ts-node src/index.ts",
-    "go:prod": "node ./build/src/index.js",
+    "go:prod": "node ./build/index.js",
     "test-watch": "jest --watchAll",
     "test": "jest"
   },

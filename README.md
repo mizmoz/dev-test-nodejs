@@ -3,7 +3,7 @@
 ## The Task
 
 Create a simple node service that provides provides some endpoints to allow the listing and updating of a
-list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to 
+list of countries and their population. This task should take 2-3 hours but don't worry if you aren't able to
 complete all items, just make sure to show your understanding of the core technologies we use.
 
 1. Fork this repo
@@ -11,7 +11,7 @@ complete all items, just make sure to show your understanding of the core techno
 3. Create an endpoint to fetch all of the countries sorted by their population
 4. Allow the populations to be updated
 5. Allow countries to be updated
-6. Allow countries to be deleted 
+6. Allow countries to be deleted
 7. Add authentication using the `src/api/authenticate.ts` method
 8. When you're done commit your code and create a pull request
 
@@ -29,3 +29,22 @@ Feel free to use the internet including Google and Stackoverflow to help with th
 Please just ask.
 
 Good luck and thanks for taking the time to complete this task!
+
+## SOLUTION
+
+The solution includes endpoints as per the requirements for the "countries" resource.
+It is added in a modular way, so other resources can be independently added if needed.
+
+Basic HTTP authentication is added, using the existing function to authenticate as per the requirement.
+
+Unit, integration and API tests are added for new code. The API tests will test the entire application including the DB connection.
+
+To start the app, run
+`docker-compose up`
+
+Initially it will not have any data, so run
+`npm i`
+`npm run seed`
+
+To run the tests, it needs to have a redis instance running (can just start the app with `docker-compose up` to share the DB), then run
+`npm run test`
