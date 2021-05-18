@@ -10,13 +10,15 @@ routes.get('/', async (ctx: Context) => {
   ctx.body = await getCountries(ctx.query.sortBy as string | undefined)
 })
 routes.post('/', async (ctx: Context) => {
-  addCountry(ctx.request.body)
+  ctx.body = await addCountry(ctx.request.body)
+  ctx.status = 201
 })
 routes.patch('/:id', async (ctx: Context) => {
-  updateCountry(ctx.params.id, ctx.request.body)
+  ctx.body = await updateCountry(ctx.params.id, ctx.request.body)
 })
 routes.delete('/:id', async (ctx: Context) => {
-  deleteCountry(ctx.params.id)
+  await deleteCountry(ctx.params.id)
+  ctx.status = 204
 })
 
-export default new Router().use('/categories', /*authenticate,*/ routes.routes())
+export default new Router().use('/countries', authenticate, routes.routes())

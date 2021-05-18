@@ -18,7 +18,7 @@ describe('Countries service', () => {
       mockRunCommand.mockResolvedValue(['2', 65, 'UK', 'gbr', '1', 10, 'Austria', 'aut'])
     })
 
-    test('get country', async () => {
+    test('get countries', async () => {
       const result = await getCountries()
 
       expect(mockRunCommand.mock.calls).toMatchInlineSnapshot(`
@@ -57,7 +57,7 @@ describe('Countries service', () => {
         ]
       `)
     })
-    test('get country ordered by population', async () => {
+    test('get countries ordered by population', async () => {
       const result = await getCountries('population')
 
       expect(mockRunCommand.mock.calls).toMatchInlineSnapshot(`
@@ -141,7 +141,7 @@ describe('Countries service', () => {
       mockRunCommand.mockResolvedValueOnce(1).mockResolvedValueOnce([652, 'UK-2', 'gbr-2'])
     })
 
-    test('adding a new country', async () => {
+    test('updating an existing country', async () => {
       const result = await updateCountry('id-gbr', { code: 'gbr-2', name: 'UK-2', population: 652 })
 
       expect(mockRunCommand.mock.calls).toMatchInlineSnapshot(`

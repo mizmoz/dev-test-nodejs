@@ -2,13 +2,9 @@ import { Country } from './types'
 import { runCommand, parseResponse } from '../redis'
 
 const getCountryById = async (id: string): Promise<Country> => {
-  const savedCountry = parseResponse<Omit<Country, 'id'>[]>(await runCommand('hgetall', id), [
-    'population',
-    'name',
-    'code',
-  ])
+  const savedCountry = (await runCommand('hgetall', id)) as Omit<Country, 'id'>
 
-  return { id, ...savedCountry[0] }
+  return { id, ...savedCountry }
 }
 
 export const getCountries = async (requestedSortBy = '') => {
