@@ -28,16 +28,19 @@ describe('authenticator', () => {
 
   test('unsuccessful authentication', async () => {
     authService.mockResolvedValue(false)
+    let error: KoaError
+
     const ctx = {
       headers: {
         authorization: `Basic ${Buffer.from('user:pwd').toString('base64')}`,
       },
     } as Context
 
-    let error: KoaError
     await authenticator(ctx, Promise.resolve).catch(e => (error = e))
 
+    // @ts-expect-error
     expect(error.message).toBe('Not Authenticated')
+    // @ts-expect-error
     expect(error.statusCode).toBe(401)
   })
 })

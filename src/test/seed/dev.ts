@@ -5,7 +5,7 @@ import { quit } from '../../redis'
 
 const seedDev = async () => {
   try {
-    const countries = countriesBaseData.slice(0, 10).map(
+    const countries = countriesBaseData.map(
       (country): Country => ({
         id: `id-${country.code}`,
         population: Math.floor(Math.random() * 100000000) + 100000,

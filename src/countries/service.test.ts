@@ -138,7 +138,9 @@ describe('Countries service', () => {
 
   describe('updateCountry', () => {
     beforeEach(() => {
-      mockRunCommand.mockResolvedValueOnce(1).mockResolvedValueOnce([652, 'UK-2', 'gbr-2'])
+      mockRunCommand
+        .mockResolvedValueOnce(1)
+        .mockResolvedValueOnce({ code: 'gbr-2', name: 'UK-2', population: 652 })
     })
 
     test('updating an existing country', async () => {

@@ -1,5 +1,3 @@
-import http from 'http'
-import listen from 'test-listen'
 import request from 'supertest'
 
 import authenticate_ from '../authenticator/authenticate'

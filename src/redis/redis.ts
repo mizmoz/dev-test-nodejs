@@ -9,7 +9,10 @@ export const runCommand = <T>(commandName: string, ...args: any[]): Promise<T> =
 
 export const connect = async () =>
   new Promise((resolve, reject) => {
-    client = redis.createClient()
+    client = redis.createClient({
+      host: process.env.REDIS_HOST || '127.0.0.1',
+      port: 6379,
+    })
     client.on('ready', resolve)
     client.on('error', reject)
     asyncCommand = promisify(client.sendCommand).bind(client)
