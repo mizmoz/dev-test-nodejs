@@ -352,7 +352,7 @@ app.get('*', (req, res) => {
 
 
 const redisConfig = {
-  host: "192.168.1.55",
+  host: "127.0.0.1",
   port: 6379
 }
 

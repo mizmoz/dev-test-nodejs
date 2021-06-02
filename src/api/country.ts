@@ -1,4 +1,4 @@
-import countries from "../configs/country-dev";
+import countries from "../configs/country";
 import { Country } from "../types";
 
 /**
