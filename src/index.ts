@@ -10,16 +10,6 @@ import redis from 'redis';
 
 let authenticated = false;
 
-function isAuthenticated(res : express.Response) {
-  if ( ! authenticated) {
-    let response = {
-      status: false,
-      message: "unauthorised"
-    };
-    res.json(response);
-  }
-}
-
 console.log("Starting simple node service!");
 
 // Create a new express application instance
@@ -91,6 +81,60 @@ async function getDynamicListOfCountries(): Promise<CountryPopulation[]> {
 }
 
 
+/** 
+ * Check all requests for authentication
+ */
+app.all("/*", (req, res, next) => {
+  console.log("in ALL, " + req.url);
+  console.log('auth authenticated=' + authenticated);
+  console.log('in global get ');
+
+
+  if (req.url.startsWith("/authenticate")) {
+    let [, , username, password] = req.url.split('/');
+    console.log('auth username=' + username);
+    console.log('auth password=' + password);
+
+    auth(username, password).then((status) => {
+      let response;
+      if (status == true) {
+        authenticated = true;
+        response = {
+          status: true,
+          message: "Authentication passed"
+        };
+      } else {
+        authenticated = false;
+        response = {
+          status: status,
+          message: "Authentication failed"
+        };
+      }
+      console.log('auth authenticated=' + authenticated);
+      res.json(response);
+    }
+    ).catch(() => {
+      let response = {
+        status: false,
+        message: "Authentication failed"
+      };
+      res.json(response);
+    }
+    );
+  } else {
+    if (!authenticated) {
+      let response = {
+        status: false,
+        message: "unauthorised"
+      };
+      res.json(response);
+    } else {
+      console.log('Authenticated');
+      next();
+    }
+  }
+});
+
 
 
 /**
@@ -112,7 +156,7 @@ app.get("/authenticate/*", (req, res) => {
         message: "Authentication passed"
       };
     } else {
-      authenticated = false; 
+      authenticated = false;
       response = {
         status: status,
         message: "Authentication failed"
@@ -132,26 +176,7 @@ app.get("/authenticate/*", (req, res) => {
 })
 
 
-/** 
- * Check all requests for authentication
- */
-/*
-app.get("/*", (req, res) => {
-  console.log(req.url);
 
-  console.log('auth authenticated=' + authenticated);
-  console.log('in global get ');
-  if ( ! authenticated ) {
-    let response = {
-      status: false,
-      message: "unauthorised"
-    };
-    res.json(response);
-  } else {
-    res.redirect(req.url)
-  }
-});
-*/
 
 
 // http://localhost:8080/ping
@@ -174,7 +199,6 @@ app.get("/ping", (req, res) => {
  * Used to Reset the redis database, for dev use
  */
 app.get("/countries/reset", async (req, res) => {
-  isAuthenticated(res);
   console.log("in /countries/init");
 
   store.keys("*", async (err, codes) => {
@@ -198,7 +222,6 @@ app.get("/countries/reset", async (req, res) => {
  * 
  */
 app.get("/countries/list", async (req, res) => {
-  isAuthenticated(res);
   console.log("in /countries/list");
 
   let listOfCountries = await getDynamicListOfCountries();
@@ -219,7 +242,6 @@ app.get("/countries/list", async (req, res) => {
  * 
  */
 app.get("/countries/sort", async (req, res) => {
-  isAuthenticated(res);
   console.log("in /countries/sort");
 
   function comparePopulation(a: any, b: any) {
@@ -253,7 +275,6 @@ app.get("/countries/sort", async (req, res) => {
  * e.g. to set the population of afg to 100
  */
 app.get("/countries/set/population/*", async (req, res) => {
-  isAuthenticated(res);
   console.log("in /countries/set/population");
   console.log(req.url);
   let [, , , , ccode, pop] = req.url.split('/');
@@ -281,14 +302,13 @@ app.get("/countries/set/population/*", async (req, res) => {
 
 
 /** 
- * API to add a nerw country to the list 
+ * API to add a new country to the list 
  * 
  * use http://localhost:8080/countries/add/United Kingdon/uk/7099
  * 
  * to set the population of the united kingdom to 7099 and enter into the database.
  */
 app.get("/countries/add/*", async (req, res) => {
-  isAuthenticated(res);
   console.log("in /countries/add/name/code/population");
   console.log(req.url);
   let [, , , name, code, pop] = req.url.split('/');
@@ -321,10 +341,9 @@ app.get("/countries/add/*", async (req, res) => {
  * 
  * use http://localhost:8080/countries/delete/afg
  * 
- * e.g. remove Adganistan from the list
+ * e.g. remove Afganistan from the list
  */
 app.get("/countries/delete/*", async (req, res) => {
-  isAuthenticated(res);
   console.log("in /countries/delete/countryCode");
   console.log(req.url);
   let [, , , code] = req.url.split('/');
@@ -352,7 +371,7 @@ app.get('*', (req, res) => {
 
 
 const redisConfig = {
-  host: "127.0.0.1",
+  host: "192.168.1.55", // "127.0.0.1",
   port: 6379
 }
 
